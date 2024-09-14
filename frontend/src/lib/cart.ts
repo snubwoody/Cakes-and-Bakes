@@ -1,5 +1,5 @@
 import { browser } from "$app/environment"
-import { supabase } from "./lib"
+import OrderForm from "../routes/order/order_form.svelte"
 
 export interface CartItem{
 	flavour:string,
@@ -9,6 +9,31 @@ export interface CartItem{
 	message?:string,
 	quantity:number,
 	price:number
+}
+
+export interface Order{
+    name:string,
+    phoneNumber:string,
+    email:string,
+    messageType:string,
+    flavour:string,
+    size:string,
+    shape:string,
+    date:string,
+    deliveryMethod:string,
+    address:string,
+    total: number,
+    quantity: number,
+    message?:string
+}
+
+export interface OrderInfo{
+	name:string,
+	email:string,
+	phoneNumber:string,
+	deliveryMethod:string,
+	address:string,
+	date:string
 }
 
 export class Cart{
@@ -47,6 +72,29 @@ export class Cart{
 		localStorage.setItem('cart',JSON.stringify(this.items))
 	}
 
+	async addSale(orderInfo:OrderInfo){
+		let item = this.items[0]
+		const order:Order = {
+			flavour:item.flavour,
+			messageType:item.messageType,
+			message:item.message,
+			size:item.size,
+			shape:item.shape,
+			total:20,
+			quantity:1,
+			...orderInfo
+		}
+		const response = await fetch("http://localhost:3000/sales",{
+			method:"POST",
+			headers:{
+				"Content-Type":"application/json"
+			},
+			body:JSON.stringify(order)
+		})
+
+		console.log(response.status)
+	}
+
 	//FIXME not working
 	remove(index:number){
 		let newCart = this.items.filter((item,itemIndex)=>{
@@ -57,12 +105,9 @@ export class Cart{
 	}
 }
 
-export function addSale(){
-	let k:Order = {flavour:""}
+export function addSale(order:Order){
+	let cart = new Cart()
 }
 
-interface Order{
-	id?:string,
-	flavour:string
-}
+
 

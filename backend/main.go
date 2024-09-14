@@ -9,6 +9,7 @@ import (
 	"os"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
 )
 
@@ -23,15 +24,21 @@ func main() {
 }
 
 func server() {
-	r := chi.NewRouter()
-	r.Get("/active", func(w http.ResponseWriter, r *http.Request) {
+	router := chi.NewRouter()
+	corsHandler := cors.Handler(cors.Options{
+		AllowedOrigins: []string{"http://localhost:5173"},
+		AllowedMethods: []string{"GET", "POST"},
+		AllowedHeaders: []string{"Content-Type"},
+	})
+	router.Use(corsHandler)
+	router.Get("/active", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("The server is up!!!"))
 	})
 
-	r.Post("/sale", addSale)
+	router.Post("/sale", addSale)
 
 	log.Printf("The server is running on port :3000")
-	http.ListenAndServe(":3000", r)
+	http.ListenAndServe(":3000", router)
 }
 
 func addSale(w http.ResponseWriter, r *http.Request) {
