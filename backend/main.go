@@ -3,45 +3,23 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
 )
 
 func main() {
+	// Load the environment variables
 	if err := godotenv.Load(); err != nil {
 		log.Fatal("Error loading .env files")
 	}
 
-	//server()
-	order := Order{
-		Name:        "Wakunguma",
-		Flavour:     "Chocolate",
-		Message:     nil,
-		PhoneNumber: "0765067857",
-		Email:       "wakunguma13@gmail.com",
-		Shape:       "Small",
-		Date:        "12/12/23",
-		Quantity:    2,
-		Total:       2.0,
-		MessageType: "Topper",
-	}
-	var body bytes.Buffer
-	e := json.NewEncoder(&body)
-	encodeErr := e.Encode(order)
-	if encodeErr != nil {
-		log.Panicln(encodeErr)
-	}
-	request, err := http.NewRequest("POST", "https://xgeaoarxkbluxxzuxyeb.supabase.co/rest/v1/sales", &body)
-	request.Header.Set("apiKey")
+	server()
 
-	if err != nil {
-		log.Println(err)
-	}
-
-	log.Println(resp)
 }
 
 func server() {
@@ -57,36 +35,58 @@ func server() {
 }
 
 func addSale(w http.ResponseWriter, r *http.Request) {
+	// TODO handle the errors and give the appropriate feedback
+	serviceKey := os.Getenv("SERVICE_KEY")
+
 	var order Order
+
+	// Decode the request body
 	d := json.NewDecoder(r.Body)
+
 	decodeErr := d.Decode(&order)
 	if decodeErr != nil {
 		log.Println(decodeErr)
 	}
+
+	// Parse the order back to json to send in the POST request
+	// Parse it twice to make sure it's valid
+	orderBody, parseErr := json.Marshal(order)
+	if parseErr != nil {
+		log.Println("Failed to parse order")
+	}
+
+	client := http.Client{}
+
+	request, err := http.NewRequest("POST", "https://xgeaoarxkbluxxzuxyeb.supabase.co/rest/v1/sales", bytes.NewBuffer(orderBody))
+	if err != nil {
+		log.Println(err)
+	}
+	request.Header.Set("apiKey", serviceKey)
+	request.Header.Set("Authorization", fmt.Sprintf("Bearer %s", serviceKey))
+	request.Header.Set("Content-Type", "application/json")
+	request.Header.Set("Prefer", "return=minimal")
+
+	resp, err := client.Do(request)
+	if err != nil {
+		log.Println(err)
+	}
+
 	w.WriteHeader(http.StatusCreated)
+	defer resp.Body.Close()
 }
 
+// TODO set delivery method
 type Order struct {
-	Name        string
-	PhoneNumber string
-	Email       string
-	Flavour     string
-	Shape       string
-	Size        string
-	Date        string
-	Total       float32
-	Quantity    int32
-	Message     *string
-	MessageType string
+	Name           string  `json:"name"`
+	PhoneNumber    string  `json:"phoneNumber"`
+	Email          string  `json:"email"`
+	Flavour        string  `json:"flavour"`
+	Shape          string  `json:"shape"`
+	Size           string  `json:"size"`
+	Date           string  `json:"date"`
+	Total          float32 `json:"total"`
+	Quantity       int32   `json:"quantity"`
+	Message        *string `json:"message"`
+	MessageType    string  `json:"messageType"`
+	DeliveryMethod string  `json:"deliveryMethod"`
 }
-
-/*
-
-curl -X POST 'https://xgeaoarxkbluxxzuxyeb.supabase.co/rest/v1/sales' \
--H "apikey: SUPABASE_CLIENT_ANON_KEY" \
--H "Authorization: Bearer SUPABASE_CLIENT_ANON_KEY" \
--H "Content-Type: application/json" \
--H "Prefer: return=minimal" \
--d '{ "some_column": "someValue", "other_column": "otherValue" }'
-
-*/
