@@ -16,7 +16,8 @@
 	</div>
 	<div class="flex items-center gap-2">
 		<!--TODO this isn't working-->
-		<Button style="bordered" onClick={()=>{alertActive = false;}}>Continue shopping</Button>
+		<!--FIXME button wrapping on small screens-->
+		<Button style="bordered" onClick={()=>{alertActive = false; }}>Continue shopping</Button>
 		<Button onClick={()=>{goto("/checkout")}}>Checkout</Button>
 	</div>
 </div>

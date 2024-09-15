@@ -13,3 +13,7 @@
 input{
 	box-sizing: border-box;
 }
+
+svg{
+	color: #191919;
+}

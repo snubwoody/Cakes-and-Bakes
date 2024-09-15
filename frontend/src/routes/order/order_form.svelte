@@ -58,7 +58,7 @@
 	//TODO add the toppings
 </script>
 
-<section class="flex flex-col justify-between h-[100dvh] sm:border md:border-0 border-l-0 md:border-l border-neutral-400 bg-white sm:rounded-5 md:rounded-none">
+<section class="md:max-w-[550px] sm:border md:border-0 border-l-0 md:border-l border-neutral-400 sm:rounded-5 md:rounded-none">
 	<div class="flex flex-col gap-10 w-full items-center">
 		<Text size="h3" weight="medium">Create your own cake</Text>
 		<div class="w-full flex flex-col gap-6">
@@ -90,11 +90,13 @@
 
 <style lang="postcss">
 	section{
+		flex:1;
+		min-height: 100dvh;
+		background-color: white;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		padding: theme(spacing.8);
-		width: 100%;
-		max-width: 550px;
+		justify-content: space-between;
 	}
 </style>

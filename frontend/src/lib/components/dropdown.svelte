@@ -20,7 +20,7 @@
 	{#if dropdownActive}
 		<ul>
 			{#each items as item}
-				<li on:click={()=>{dropdownActive = false;activeItem = item}} class="p-2 hover:bg-neutral-200 rounded-1 flex items-center justify-center">
+				<li on:click={()=>{dropdownActive = false;activeItem = item}} class="p-2 hover:bg-neutral-200 rounded-1 flex w-full items-center justify-center">
 					{item}
 				</li>
 			{/each}
@@ -28,6 +28,7 @@
 	{/if}
 </div>
 
+<!--FIXME calculate the right position for the bottom-->
 <style lang="postcss">
 	ul{
 		@apply p-2 gap-2 shadow-base bg-white;
@@ -37,6 +38,7 @@
 		z-index: 50;
 		position: absolute;
 		bottom: -50px;
+		width: 100%;
 		border-radius: theme(borderRadius.2);
 	}
 </style>
