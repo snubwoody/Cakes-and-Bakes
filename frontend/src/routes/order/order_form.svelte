@@ -10,20 +10,45 @@
 	const cart = new Cart()
 
 	let toppings = ["Oreos","Ferroro rocher","Choc chips","Sprinkles"]
-	let flavour:string;
-	let shape:string;
-	let size:string;
-	let messageType:string;
+	let flavour: "Vanilla" | "Chocolate" | "Red velvet";
+	let shape: "Round" | "Square" | "Heart";
+	let size: "Large" | "Medium" | "Small";
+	let messageType: "Topper" | "Icing";
 	let message:string;
 
 	let alertActive = false;
+
+	const flavourPrice = {
+		"Vanilla":300,
+		"Chocolate":500,
+		"Red velvet":600
+	}
+
+	const shapePrice = {
+		"Round":50,
+		"Square":100,
+		"Heart":150
+	}
+
+	const sizePrice = {
+		"Large":300,
+		"Medium":200,
+		"Small":100
+	}
+
+	const messagePrice = {
+		"Topper":100,
+		"Icing":100
+	}
 
 	function addToCart(){
 		if(!(flavour || shape || size || messageType)){
 			alert("Please fill in everything")
 			return
 		}
-		let item:CartItem = {shape,size,messageType,message,flavour,price:0,quantity:1}
+
+		let price = flavourPrice[flavour] + shapePrice[shape] + sizePrice[size] + messagePrice[messageType]
+		let item:CartItem = {shape,size,messageType,message,flavour,price,quantity:1}
 		cart.add(item)
 
 		alertActive = true;
@@ -59,7 +84,7 @@
 	</div>
 	<Button onClick={()=>{addToCart()}}>Add to cart</Button>
 	{#if alertActive}
-		<OrderAlert/>
+		<OrderAlert bind:alertActive/>
 	{/if}
 </section>
 

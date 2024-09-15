@@ -9,9 +9,10 @@
 
 	
 	//FIXME cart isn't reactive
+	let deliveryMethod:string;
 </script>
 
 <main class="flex justify-center lg:justify-between px-5 sm:px-12 py-8 sm:py-10">
-	<Checkout/>
-	<OrderSummary/>
+	<Checkout bind:deliveryMethod/>
+	<OrderSummary bind:deliveryMethod/>
 </main>

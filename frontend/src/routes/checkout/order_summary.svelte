@@ -5,6 +5,8 @@
     import { MinusIcon, PlusIcon } from "svelte-feather-icons";
     import { writable } from "svelte/store";
 	let cart = writable(new Cart())
+
+	export let deliveryMethod:string;
 </script>
 
 <section class="hidden lg:flex flex-col w-full max-w-[500px] h-fit gap-5 p-7 rounded-3 border border-neutral-400">
@@ -35,18 +37,20 @@
 		</div>
 		<div class="flex items-center justify-between">
 			<Text>Sub-total</Text>
-			<Text>K0.00</Text>
+			<Text>K{$cart.total}</Text>
 		</div>
 	</div>
 	<Divider/>
 	<div class="flex flex-col gap-4">
 		<div class="flex items-center justify-between">
-			<Text>Delivery fee</Text>
-			<Text>K50.00</Text>
+			{#if deliveryMethod === "Delivery"}
+				<Text>Delivery fee</Text>
+				<Text>K50.00</Text>
+			{/if}
 		</div>
 		<div class="flex items-center justify-between">
 			<Text size='h5' weight='medium'>Total</Text>
-			<Text size='h5' weight='medium'>K150.00</Text>
+			<Text size='h5' weight='medium'>K{deliveryMethod === "Delivery" ? $cart.total + 50 : $cart.total}</Text>
 		</div>
 	</div>
 </section>

@@ -1,9 +1,12 @@
-<script class="">
+<script lang="ts">
+    import { goto } from "$app/navigation";
     import Button from "$lib/components/button.svelte";
 	import Text from "$lib/components/text.svelte";
+    import { redirect } from "@sveltejs/kit";
 	import { CheckIcon } from "svelte-feather-icons";
     import { fly } from "svelte/transition";
 
+	export let alertActive:boolean;
 </script>
 
 <div in:fly={{x:'520px',duration:750}} class="order-alert">
@@ -12,8 +15,9 @@
 		<Text size="h5">Cake added to cart</Text>
 	</div>
 	<div class="flex items-center gap-2">
-		<Button style="bordered" onClick={()=>{}}>Continue shopping</Button>
-		<Button onClick={()=>{}}>Checkout</Button>
+		<!--TODO this isn't working-->
+		<Button style="bordered" onClick={()=>{alertActive = false;}}>Continue shopping</Button>
+		<Button onClick={()=>{goto("/checkout")}}>Checkout</Button>
 	</div>
 </div>
 

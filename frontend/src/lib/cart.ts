@@ -52,6 +52,14 @@ export class Cart{
 		this.items = []
 	}
 
+	get total():number {
+		let total = this.items.reduce((prevVal,item)=>{
+			return prevVal += item.price * item.quantity
+		},0)
+		
+		return total
+	}
+
 	add(item:CartItem){
 		this.items.push(item)
 		localStorage.setItem('cart',JSON.stringify(this.items))

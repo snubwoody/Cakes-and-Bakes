@@ -6,7 +6,7 @@
     import Tabs from "$lib/components/tabs.svelte";
 	import Text from "$lib/components/text.svelte";
 	
-	let deliveryMethod:string;
+	export let deliveryMethod:string = "Pick-up";
 	let form:HTMLFormElement;
 
 	let cart = new Cart()
@@ -15,8 +15,6 @@
 	function addPurchase(){
 		let formData = new FormData(form)
 
-		const data = Object.fromEntries(formData.entries())
-		
 		let order:OrderInfo = {
 			name:String(formData.get("name")),
 			phoneNumber:String(formData.get("phoneNumber")),
