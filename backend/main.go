@@ -35,7 +35,7 @@ func server() {
 		w.Write([]byte("The server is up!!!"))
 	})
 
-	router.Post("/sale", addSale)
+	router.Post("/purchase", addSale)
 
 	log.Printf("The server is running on port :3000")
 	http.ListenAndServe(":3000", router)

@@ -84,7 +84,7 @@ export class Cart{
 			quantity:1,
 			...orderInfo
 		}
-		const response = await fetch("http://localhost:3000/sales",{
+		const response = await fetch("http://localhost:3000/purchase",{
 			method:"POST",
 			headers:{
 				"Content-Type":"application/json"
@@ -92,7 +92,7 @@ export class Cart{
 			body:JSON.stringify(order)
 		})
 
-		console.log(response.status)
+		//console.log(response.status)
 	}
 
 	//FIXME not working
