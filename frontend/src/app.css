@@ -9,3 +9,7 @@
 	font-optical-sizing: auto;
 	font-style: normal;
 }
+
+input{
+	box-sizing: border-box;
+}
