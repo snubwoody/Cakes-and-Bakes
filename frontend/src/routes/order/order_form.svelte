@@ -29,11 +29,12 @@
 		alertActive = true;
 		setTimeout(()=>{alertActive = false},4000)
 	}
-	//TODO add the alert
+
 	//TODO add the toppings
+	//FIXME border on tablet sizes
 </script>
 
-<section class="flex flex-col justify-between h-screen border-l border-neutral-400">
+<section class="flex flex-col justify-between h-[100dvh] sm:border md:border-0 border-l-0 md:border-l border-neutral-400 bg-white sm:rounded-5 md:rounded-none">
 	<div class="flex flex-col gap-10 w-full items-center">
 		<Text size="h3" weight="medium">Create your own cake</Text>
 		<div class="w-full flex flex-col gap-6">
@@ -50,8 +51,7 @@
 				<Text weight="medium">Toppings</Text>
 				{#each toppings as topping}
 				<li class="flex items-center justify-between">
-					<!--FIXME change the colour here-->
-					<Text>{ topping }</Text>
+					<Text class="text-neutral-600">{ topping }</Text>
 					<Checkbox/>
 				</li>
 				{/each}
