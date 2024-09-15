@@ -68,7 +68,7 @@ export default{
 			light:'300',
 		},
 		screens:{
-			sm:'430px',
+			sm:'520px',
 			md:'744px',
 			lg:'1024px',
 			xl:'1280px',
