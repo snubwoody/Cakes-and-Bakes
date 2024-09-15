@@ -5,6 +5,7 @@
 	import Dropdown from "$lib/components/dropdown.svelte";
 	import Text from "$lib/components/text.svelte";
     import Textarea from "$lib/components/textarea.svelte";
+    import OrderAlert from "./order_alert.svelte";
 
 	const cart = new Cart()
 
@@ -15,6 +16,8 @@
 	let messageType:string;
 	let message:string;
 
+	let alertActive = false;
+
 	function addToCart(){
 		if(!(flavour || shape || size || messageType)){
 			alert("Please fill in everything")
@@ -22,6 +25,9 @@
 		}
 		let item:CartItem = {shape,size,messageType,message,flavour,price:0,quantity:1}
 		cart.add(item)
+
+		alertActive = true;
+		setTimeout(()=>{alertActive = false},4000)
 	}
 	//TODO add the alert
 	//TODO add the toppings
@@ -53,6 +59,9 @@
 		</div>
 	</div>
 	<Button onClick={()=>{addToCart()}}>Add to cart</Button>
+	{#if alertActive}
+		<OrderAlert/>
+	{/if}
 </section>
 
 <style lang="postcss">

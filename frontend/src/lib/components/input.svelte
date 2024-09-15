@@ -16,5 +16,6 @@
 	input{
 		box-sizing: border-box;
 		width: 100%;
+		border-radius: theme(borderRadius.2);
 	}
 </style>
