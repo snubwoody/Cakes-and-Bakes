@@ -31,7 +31,6 @@
 	}
 
 	//TODO add the toppings
-	//FIXME border on tablet sizes
 </script>
 
 <section class="flex flex-col justify-between h-[100dvh] sm:border md:border-0 border-l-0 md:border-l border-neutral-400 bg-white sm:rounded-5 md:rounded-none">

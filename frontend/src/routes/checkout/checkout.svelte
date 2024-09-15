@@ -30,7 +30,6 @@
 	}
 </script>
 
-<!--FIXME layout error-->
 <!--TODO find a way to parse things like dates and card numbers-->
 <section class="w-full max-w-[450px] flex flex-col gap-6 items-center">
 	<Text weight="medium" size="h1">Checkout</Text>
@@ -54,7 +53,6 @@
 		<div class="flex flex-col gap-6 w-full">
 			<Input name="cardNumber" label="Card number" placeholder="0000 0000 0000 0000"/>
 			<div class="flex items-center gap-7">
-				<!--FIXME fix the overflow-->
 				<Input name="cardExpiry" label="Expiry" placeholder="MM / YY"/>
 				<Input name="cvv" label="CVV" placeholder="xxx"/>
 			</div>	

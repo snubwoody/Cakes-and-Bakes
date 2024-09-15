@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { Cart } from "$lib/cart";
     import { UploadCloudIcon } from "svelte-feather-icons";
     import OrderForm from "./order_form.svelte";
     import Text from "$lib/components/text.svelte";
     import Button from "$lib/components/button.svelte";
+	//TODO add the prices
 </script>
 
 <main class="flex flex-col md:flex-row gap-3 sm:gap-7 md:gap-0 sm:px-6 md:px-0 sm:py-12 md:py-0 bg-neutral-100 l:bg-white">
