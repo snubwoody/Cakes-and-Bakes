@@ -10,7 +10,7 @@
 	//FIXME cart isn't reactive
 </script>
 
-<main class="flex justify-between px-12 py-10">
+<main class="flex justify-center lg:justify-between px-5 sm:px-12 py-8 sm:py-10">
 	<Checkout/>
 	<section class="hidden lg:flex flex-col w-full max-w-[500px] h-fit gap-5 p-7 rounded-3 border border-neutral-400">
 		<Text size="h3" weight="medium">Order summary</Text>

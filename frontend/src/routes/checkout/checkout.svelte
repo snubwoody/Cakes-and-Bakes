@@ -32,9 +32,9 @@
 
 <!--FIXME layout error-->
 <!--TODO find a way to parse things like dates and card numbers-->
-<section class="max-w-[450px] flex flex-col gap-6 items-center">
+<section class="w-full max-w-[450px] flex flex-col gap-6 items-center">
 	<Text weight="medium" size="h1">Checkout</Text>
-	<form bind:this={form} class="flex flex-col gap-8">
+	<form bind:this={form} class="w-full flex flex-col gap-8">
 		<div class="flex flex-col gap-6">
 			<Input name="name" label="Name" placeholder="John doe"/>
 			<Input name="email" label="Email" placeholder="example@email.com"/>

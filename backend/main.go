@@ -25,11 +25,14 @@ func main() {
 
 func server() {
 	router := chi.NewRouter()
+
+	// CORS middleware
 	corsHandler := cors.Handler(cors.Options{
 		AllowedOrigins: []string{"http://localhost:5173"},
 		AllowedMethods: []string{"GET", "POST"},
 		AllowedHeaders: []string{"Content-Type"},
 	})
+
 	router.Use(corsHandler)
 	router.Get("/active", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("The server is up!!!"))

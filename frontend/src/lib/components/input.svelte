@@ -5,7 +5,6 @@
 	export let label:string;
 	export let placeholder:string = "";
 	export let type:string = "text"
-	// Medium fonts not working in firefox
 </script>
 
 <label for={name} class="flex flex-col gap-2">
