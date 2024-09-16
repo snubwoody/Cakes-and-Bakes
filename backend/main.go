@@ -8,9 +8,12 @@ import (
 	"net/http"
 	"os"
 
+	api "github.com/twilio/twilio-go/rest/api/v2010"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
+	"github.com/twilio/twilio-go"
 )
 
 func main() {
@@ -19,8 +22,20 @@ func main() {
 		log.Fatal("Error loading .env files")
 	}
 
-	server()
+	client := twilio.NewRestClient()
 
+	params := &api.CreateMessageParams{}
+	params.SetBody("Need a break from the ads")
+	params.SetFrom("+13342588772")
+	params.SetTo("+17809368597")
+
+	resp, err := client.Api.CreateMessage(params)
+	if err != nil {
+		log.Println(err)
+	}
+
+	log.Println(resp)
+	//server()
 }
 
 func server() {
