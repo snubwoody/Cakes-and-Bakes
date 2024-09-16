@@ -6,7 +6,7 @@
     import Tabs from "$lib/components/tabs.svelte";
 	import Text from "$lib/components/text.svelte";
 	
-	export let deliveryMethod:string = "Pick-up";
+	export let deliveryMethod:string;
 	let form:HTMLFormElement;
 
 	let cart = new Cart()
@@ -47,14 +47,14 @@
 				<Input name="date" label="Pick up date" placeholder="DD / MM / YYYY"/>
 			{/if}
 		</div>
-		<Divider/>
+		<!-- <Divider/>
 		<div class="flex flex-col gap-6 w-full">
 			<Input name="cardNumber" label="Card number" placeholder="0000 0000 0000 0000"/>
 			<div class="flex items-center gap-7">
 				<Input name="cardExpiry" label="Expiry" placeholder="MM / YY"/>
 				<Input name="cvv" label="CVV" placeholder="xxx"/>
 			</div>	
-		</div>
+		</div> -->
 		<Button onClick={()=>{addPurchase()}}>Confirm purchase</Button>
 	</form>
 </section>

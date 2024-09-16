@@ -20,7 +20,7 @@
 	{#if dropdownActive}
 		<ul>
 			{#each items as item}
-				<li on:click={()=>{dropdownActive = false;activeItem = item}} class="p-2 hover:bg-neutral-200 rounded-1 flex w-full items-center justify-center">
+				<li on:click={()=>{dropdownActive = false;activeItem = item}} class="p-2 hover:bg-neutral-200 rounded-1 flex w-full items-center justify-start">
 					{item}
 				</li>
 			{/each}

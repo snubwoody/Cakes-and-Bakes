@@ -2,6 +2,7 @@
 	import { Cart } from "$lib/cart";
     import Divider from "$lib/components/divider.svelte";
 	import Text from "$lib/components/text.svelte";
+    import { currency } from "$lib/lib";
     import { MinusIcon, PlusIcon } from "svelte-feather-icons";
     import { writable } from "svelte/store";
 	let cart = writable(new Cart())
@@ -18,7 +19,7 @@
 				<div class="flex justify-between">
 					<div class="flex flex-col gap-1">
 						<Text size='h6'>{item.flavour}</Text>
-						<Text class="text-neutral-600">K{item.price}.00</Text>
+						<Text class="text-neutral-600">{currency(item.price)}</Text>
 					</div>
 					<div class="flex items-center gap-8 px-3 py-2 rounded-2 border-2 border-neutral-400">
 						<button on:click={()=>{$cart.decrement(index)}}>
@@ -37,7 +38,7 @@
 		</div>
 		<div class="flex items-center justify-between">
 			<Text>Sub-total</Text>
-			<Text>K{$cart.total}</Text>
+			<Text>{currency($cart.total)}</Text>
 		</div>
 	</div>
 	<Divider/>
@@ -45,12 +46,12 @@
 		<div class="flex items-center justify-between">
 			{#if deliveryMethod === "Delivery"}
 				<Text>Delivery fee</Text>
-				<Text>K50.00</Text>
+				<Text>{currency(50)}</Text>
 			{/if}
 		</div>
 		<div class="flex items-center justify-between">
 			<Text size='h5' weight='medium'>Total</Text>
-			<Text size='h5' weight='medium'>K{deliveryMethod === "Delivery" ? $cart.total + 50 : $cart.total}</Text>
+			<Text size='h5' weight='medium'>{deliveryMethod === "Delivery" ? currency($cart.total + 50) : currency($cart.total)}</Text>
 		</div>
 	</div>
 </section>
