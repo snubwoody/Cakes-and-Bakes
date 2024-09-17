@@ -1,15 +1,10 @@
 <script>
+    import Cart from "$lib/components/cart.svelte";
+
 
 </script>
 
 <main class="w-screen h-[100dvh]">
-	<div class="cart">
-
-	</div>
+	<Cart open/>
 </main>
 
-<style lang="postcss">
-	.cart{
-
-	}
-</style>

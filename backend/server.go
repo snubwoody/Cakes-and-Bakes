@@ -69,13 +69,13 @@ func verifyPurchase() {
 	params.SetFrom("+13342588772")
 	params.SetTo("+260765067857")
 
-	resp, err := client.Api.CreateMessage(params)
+	_, err := client.Api.CreateMessage(params)
 	if err != nil {
 		log.Println(err)
 	}
 
 	//TODO handle errors
-	log.Println(resp)
+	//log.Println(resp)
 }
 
 func server() {

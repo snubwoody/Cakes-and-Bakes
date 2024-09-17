@@ -1,7 +1,10 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
+
 	export let style: 'primary' | 'neutral' | 'bordered' = 'primary';
 	export let fit:boolean = false;
-	export let onClick:VoidFunction;
+	export let onClick:VoidFunction = ()=>{};
+	export let href:string = ""
 
 	const buttonStyle = {
 		primary:'bg-primary-action hover:shadow-lg text-neutral-100',
@@ -10,9 +13,8 @@
 	}
 
 	const buttonSize = fit ? 'w-fit' : 'w-full'
-
 </script>
 
-<button on:click={()=>{onClick()}} class={`flex items-center justify-center gap-2 px-8 py-4 rounded-6 ${buttonSize} ${buttonStyle[style]}`}>
+<button on:click={()=>{onClick();goto(href)}} class={`flex items-center justify-center gap-2 px-8 py-4 rounded-6 ${buttonSize} ${buttonStyle[style]}`}>
 	<slot/>
 </button>

@@ -1,0 +1,68 @@
+<script lang="ts">
+    import { XIcon,MinusIcon,PlusIcon } from "svelte-feather-icons";
+	import Button from "./button.svelte";
+    import Text from "./text.svelte";
+    import { Cart } from "$lib/cart";
+    import { currency } from "$lib/lib";
+
+	export let open = false;
+	let cart = new Cart()
+</script>
+
+{#if open}
+	<aside class="cart">
+		<div class="flex flex-col gap-4">
+			<div class="flex items-center justify-between">
+				<Text weight="medium" size='h3'>Cart</Text>
+				<button on:click={()=>{open = false}}>
+					<XIcon/>
+				</button>
+			</div>
+			<div class="flex flex-col gap-2 py-4 max-h-[400px] min-h-[150px] overflow-y-auto">
+				{#each cart.items as item,index}
+					<div class="flex justify-between">
+						<div class="flex flex-col gap-1">
+							<Text size='h6'>{item.flavour}</Text>
+							<Text class="text-neutral-600">{currency(item.price)}</Text>
+						</div>
+						<div class="flex items-center gap-8 px-3 py-2 rounded-2 border-2 border-neutral-400">
+							<button on:click={()=>{cart.decrement(index)}}>
+								<MinusIcon/>
+							</button>
+							<Text>{item.quantity}</Text>
+							<button on:click={()=>{cart.increment(index)}}>
+								<PlusIcon/>
+							</button>
+						</div>
+					</div>
+				{:else}
+					<Text class="text-neutral-500">Your cart is empty</Text>
+				{/each}
+			</div>
+			<div class="flex items-center justify-between">
+				<Text weight='medium' size='h5'>Total</Text>
+				<Text weight='medium' size='h5'>{currency(cart.total)}</Text>
+			</div>
+		</div>
+		<div class="flex flex-col gap-3">
+			<Button style="bordered">Clear cart</Button>
+			<Button href="/checkout">Checkout</Button>
+		</div>
+	</aside>
+{/if}
+
+<style lang="postcss">
+	.cart{
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		width: 100%;
+		height: 100dvh;
+		max-width: 500px;
+		position: fixed;
+		right: 0;
+		top: 0;
+		border-left: 1px solid theme(colors.neutral.400);
+		padding: theme(spacing.7) theme(spacing.8);
+	}
+</style>
