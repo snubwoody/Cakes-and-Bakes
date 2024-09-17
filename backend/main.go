@@ -5,10 +5,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math/big"
 	"net/http"
 	"os"
+	"strconv"
 
 	api "github.com/twilio/twilio-go/rest/api/v2010"
+
+	"crypto/rand"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
@@ -22,20 +26,56 @@ func main() {
 		log.Fatal("Error loading .env files")
 	}
 
+	verifyPurchase()
+
+	//server()
+}
+
+// FIXME one of the numbers was five digits, investigate
+func generateOTP(digits int) int {
+	var rnd []int64
+
+	for range digits {
+		n, err := rand.Int(rand.Reader, big.NewInt(9))
+		if err != nil {
+			log.Println(err)
+		}
+		rnd = append(rnd, n.Int64())
+	}
+
+	result := ""
+
+	for _, i := range rnd {
+		strconv.Itoa(int(i))
+		result += strconv.Itoa(int(i))
+	}
+
+	otp, err := strconv.Atoi(result)
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	return otp
+}
+
+func verifyPurchase() {
 	client := twilio.NewRestClient()
 
+	otp := generateOTP(6)
+
 	params := &api.CreateMessageParams{}
-	params.SetBody("Need a break from the ads")
+	params.SetBody(fmt.Sprintf("Your verification code is %d", otp))
 	params.SetFrom("+13342588772")
-	params.SetTo("+17809368597")
+	params.SetTo("+260765067857")
 
 	resp, err := client.Api.CreateMessage(params)
 	if err != nil {
 		log.Println(err)
 	}
 
+	//TODO handle errors
 	log.Println(resp)
-	//server()
 }
 
 func server() {
