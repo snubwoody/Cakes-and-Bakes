@@ -1,5 +1,5 @@
 import { browser } from "$app/environment"
-import OrderForm from "../routes/order/order_form.svelte"
+import { writable, type Writable } from "svelte/store"
 
 export interface CartItem{
 	flavour:string,
@@ -99,11 +99,9 @@ export class Cart{
 			},
 			body:JSON.stringify(order)
 		})
-
-		//console.log(response.status)
 	}
 
-	//FIXME not working
+	//FIXME remove from cart not working
 	remove(index:number){
 		let newCart = this.items.filter((item,itemIndex)=>{
 			itemIndex !== index
@@ -112,10 +110,5 @@ export class Cart{
 		localStorage.setItem('cart',JSON.stringify(newCart))
 	}
 }
-
-export function addSale(order:Order){
-	let cart = new Cart()
-}
-
 
 
