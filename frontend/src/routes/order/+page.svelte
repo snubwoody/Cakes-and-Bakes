@@ -9,8 +9,8 @@
 	<title>Order</title>
 </svelte:head>
 <main class="flex flex-col md:flex-row gap-3 sm:gap-7 md:gap-0 sm:px-6 md:px-0 sm:py-12 md:py-0 bg-neutral-100 l:bg-white">
-	<section class="bg-neutral-100 hidden sm:flex lg:py-11 lg:px-11 justify-center flex-1">
-		<div class="flex flex-col items-center justify-center gap-7 rounded-5 w-full aspect-[3/2] bg-white max-w-[650px]">
+	<section class="bg-neutral-100 hidden sm:flex md:py-11 md:px-8 lg:px-11 justify-center flex-1">
+		<div class="flex flex-col items-center justify-center gap-7 rounded-5 w-full bg-white max-w-[650px] h-[450px]">
 			<UploadCloudIcon size="66"/>
 			<div class="flex flex-col gap-1 items-center">
 				<Text>Have an idea of the cake you want?</Text>

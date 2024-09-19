@@ -11,7 +11,7 @@
 
 	let cart = new Cart()
 
-	//TODO handle null values
+	//TODO handle null values or maybe just post the data as a form
 	function addPurchase(){
 		let formData = new FormData(form)
 
@@ -29,7 +29,7 @@
 </script>
 
 <!--TODO find a way to parse things like dates and card numbers-->
-<section class="w-full max-w-[450px] flex flex-col gap-6 items-center">
+<section class="w-full max-w-[450px] flex flex-col gap-6 items-center md:items-start">
 	<Text weight="medium" size="h1">Checkout</Text>
 	<form bind:this={form} class="w-full flex flex-col gap-8">
 		<div class="flex flex-col gap-6">
@@ -47,14 +47,6 @@
 				<Input name="date" label="Pick up date" placeholder="DD / MM / YYYY"/>
 			{/if}
 		</div>
-		<!-- <Divider/>
-		<div class="flex flex-col gap-6 w-full">
-			<Input name="cardNumber" label="Card number" placeholder="0000 0000 0000 0000"/>
-			<div class="flex items-center gap-7">
-				<Input name="cardExpiry" label="Expiry" placeholder="MM / YY"/>
-				<Input name="cvv" label="CVV" placeholder="xxx"/>
-			</div>	
-		</div> -->
 		<Button onClick={()=>{addPurchase()}}>Confirm purchase</Button>
 	</form>
 </section>
