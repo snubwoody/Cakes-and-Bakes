@@ -7,7 +7,7 @@
     import Textarea from "$lib/components/textarea.svelte";
     import OrderAlert from "./order_alert.svelte";
 
-	export let image:File | null = null;
+	export let image:string | null = null;
 
 	const cart = new Cart()
 

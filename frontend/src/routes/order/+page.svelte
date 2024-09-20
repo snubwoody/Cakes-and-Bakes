@@ -6,7 +6,7 @@
 
 	let imageInput:HTMLInputElement;
 	let fileName: string | null = null;
-	let file: File | null = null;
+	let file: string | null = null;
 
 	async function parseFile(){
 		if (imageInput.files === null) {
@@ -27,7 +27,15 @@
 			return
 		}
 
-		file = image
+		fileName = image.name
+
+		let reader = new FileReader()
+		reader.onload = (e) => {
+			if (e.target){
+				file = e.target.result
+			}
+		}
+		reader.readAsDataURL(image)
 	}
 </script>
 
@@ -40,7 +48,7 @@
 			<UploadCloudIcon size="66"/>
 			<div class="flex flex-col gap-1 items-center">
 				<Text>Have an idea of the cake you want?</Text>
-				<Text weight="medium">{file?.name ?? "Pick an image"}</Text>
+				<Text weight="medium">{fileName ?? "Pick an image"}</Text>
 				<input 
 					bind:this={imageInput} 
 					on:input={parseFile} 

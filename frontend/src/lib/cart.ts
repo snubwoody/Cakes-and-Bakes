@@ -9,7 +9,7 @@ export interface CartItem{
 	message?:string,
 	quantity:number,
 	price:number,
-	image:File | null
+	image:string | null
 }
 
 export interface Order{

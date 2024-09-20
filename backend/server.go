@@ -2,13 +2,17 @@ package main
 
 import (
 	"bytes"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	_ "image/jpeg"
+	_ "image/png"
 	"log"
 	"math/big"
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 
 	api "github.com/twilio/twilio-go/rest/api/v2010"
 
@@ -91,7 +95,6 @@ func server() {
 	router.Get("/active", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("The server is up!!!"))
 	})
-
 	router.Post("/purchase", addSale)
 
 	log.Printf("The server is running on port :3000")
@@ -107,11 +110,16 @@ func addSale(w http.ResponseWriter, r *http.Request) {
 
 	// Decode the request body
 	d := json.NewDecoder(r.Body)
+	d.DisallowUnknownFields()
 
 	decodeErr := d.Decode(&order)
 	if decodeErr != nil {
 		log.Println(decodeErr)
+		w.WriteHeader(http.StatusBadRequest)
+		return
 	}
+
+	uploadImage(order.Image)
 
 	// Parse the order back to json to send in the POST request
 	// Parse it twice to make sure it's valid
@@ -134,13 +142,31 @@ func addSale(w http.ResponseWriter, r *http.Request) {
 	resp, err := client.Do(request)
 	if err != nil {
 		log.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 
-	w.WriteHeader(http.StatusCreated)
+	if resp.StatusCode == 400 {
+		//log.Println(resp)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 	defer resp.Body.Close()
+
+	w.WriteHeader(http.StatusCreated)
 }
 
-// TODO set delivery method
+func uploadImage(rawData string) {
+	dataType, data, _ := strings.Cut(rawData, "base64,")
+	log.Println(dataType)
+	rawImage, err := base64.StdEncoding.DecodeString(data)
+	if err != nil {
+		log.Println(err)
+	}
+
+	os.WriteFile("test.jpg", rawImage, 0644)
+}
+
 type Order struct {
 	Name           string  `json:"name"`
 	PhoneNumber    string  `json:"phoneNumber"`
@@ -154,4 +180,6 @@ type Order struct {
 	Message        *string `json:"message"`
 	MessageType    string  `json:"messageType"`
 	DeliveryMethod string  `json:"deliveryMethod"`
+	Address        string  `json:"address"`
+	Image          string  `json:"image"`
 }
