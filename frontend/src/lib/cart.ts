@@ -8,7 +8,8 @@ export interface CartItem{
 	shape:string,
 	message?:string,
 	quantity:number,
-	price:number
+	price:number,
+	image:File | null
 }
 
 export interface Order{
@@ -21,6 +22,7 @@ export interface Order{
     shape:string,
     date:string,
     deliveryMethod:string,
+	image:File | null
     address:string,
     total: number,
     quantity: number,
@@ -82,16 +84,19 @@ export class Cart{
 
 	async addSale(orderInfo:OrderInfo){
 		let item = this.items[0]
+
 		const order:Order = {
 			flavour:item.flavour,
 			messageType:item.messageType,
 			message:item.message,
 			size:item.size,
 			shape:item.shape,
+			image:item.image,
 			total:20,
 			quantity:1,
 			...orderInfo
 		}
+
 		const response = await fetch("http://localhost:3000/purchase",{
 			method:"POST",
 			headers:{

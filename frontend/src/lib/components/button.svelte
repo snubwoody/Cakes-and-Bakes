@@ -15,6 +15,12 @@
 	const buttonSize = fit ? 'w-fit' : 'w-full'
 </script>
 
-<button on:click={()=>{onClick();goto(href)}} class={`flex items-center justify-center gap-2 px-8 py-4 rounded-6 ${buttonSize} ${buttonStyle[style]}`}>
+<button {...$$restProps} on:click={()=>{onClick();goto(href)}} class={`flex items-center justify-center gap-2 px-8 py-4 rounded-6 ${buttonSize} ${buttonStyle[style]}`}>
 	<slot/>
 </button>
+
+<style lang="postcss">
+	.button{
+		display: flex;
+	}
+</style>

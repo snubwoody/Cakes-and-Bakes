@@ -26,9 +26,8 @@ func main() {
 		log.Fatal("Error loading .env files")
 	}
 
-	verifyPurchase()
-
-	//server()
+	//verifyPurchase()
+	server()
 }
 
 // FIXME one of the numbers was five digits, investigate
@@ -99,6 +98,7 @@ func server() {
 	http.ListenAndServe(":3000", router)
 }
 
+// TODO add state and sharedId
 func addSale(w http.ResponseWriter, r *http.Request) {
 	// TODO handle the errors and give the appropriate feedback
 	serviceKey := os.Getenv("SERVICE_KEY")

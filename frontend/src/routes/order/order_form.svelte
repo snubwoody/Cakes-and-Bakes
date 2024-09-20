@@ -7,6 +7,8 @@
     import Textarea from "$lib/components/textarea.svelte";
     import OrderAlert from "./order_alert.svelte";
 
+	export let image:File | null = null;
+
 	const cart = new Cart()
 
 	let toppings = ["Oreos","Ferroro rocher","Choc chips","Sprinkles"]
@@ -48,7 +50,7 @@
 		}
 
 		let price = flavourPrice[flavour] + shapePrice[shape] + sizePrice[size] + messagePrice[messageType]
-		let item:CartItem = {shape,size,messageType,message,flavour,price,quantity:1}
+		let item:CartItem = {shape,size,messageType,message,flavour,price,quantity:1,image}
 		cart.add(item)
 
 		alertActive = true;

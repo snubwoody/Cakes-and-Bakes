@@ -15,10 +15,10 @@
 		<Text size="h5">Cake added to cart</Text>
 	</div>
 	<div class="flex items-center gap-2">
-		<!--TODO this isn't working-->
+		<!--FIXME this isn't working-->
 		<!--FIXME button wrapping on small screens-->
 		<Button style="bordered" onClick={()=>{alertActive = false; }}>Continue shopping</Button>
-		<Button onClick={()=>{goto("/checkout")}}>Checkout</Button>
+		<Button href="/checkout" onClick={()=>{}}>Checkout</Button>
 	</div>
 </div>
 
