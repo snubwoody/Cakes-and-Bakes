@@ -1,6 +1,13 @@
 <script lang="ts">
-	export let size:  'xs' | 'sm' |'base' | 'h6' | 'h5' | 'h4' | 'h3' | 'h2' | 'h1' = 'base' ;
-	export let weight:  'light' | 'regular' |'medium' | 'bold' = 'regular' ;
+	type SizeOptions = 'xs' | 'sm' |'base' | 'h6' | 'h5' | 'h4' | 'h3' | 'h2' | 'h1'
+	type WeightOptions =  'light' | 'regular' |'medium' | 'bold'
+
+	interface Props {
+		size:SizeOptions,
+		weight:WeightOptions
+	}
+
+	let { size = 'base', weight = 'regular' }:Props = $props()
 
 	const fontSize = {
 		h1:'text-h1',

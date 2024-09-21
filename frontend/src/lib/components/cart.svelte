@@ -2,12 +2,11 @@
     import { XIcon,MinusIcon,PlusIcon } from "svelte-feather-icons";
 	import Button from "./button.svelte";
     import Text from "./text.svelte";
-    import { Cart,cart } from "$lib/cart";
+    import { Cart, createCart } from "$lib/cart";
     import { currency } from "$lib/lib";
 
 	export let open = false;
-	let cartItems = new Cart()
-
+	let cart = createCart()
 </script>
 
 {#if open}
@@ -15,23 +14,23 @@
 		<div class="flex flex-col gap-4">
 			<div class="flex items-center justify-between">
 				<Text weight="medium" size='h3'>Cart</Text>
-				<button on:click={()=>{open = false}}>
+				<button onclick={()=>{open = false}}>
 					<XIcon/>
 				</button>
 			</div>
 			<div class="flex flex-col gap-5 py-4 max-h-[400px] min-h-[150px] overflow-y-auto border-y-2 border-neutral-400">
-				{#each $cart as item,index}
+				{#each cart.items as item,index}
 					<div class="flex justify-between">
 						<div class="flex flex-col gap-1">
 							<Text size='h6'>{item.flavour}</Text>
 							<Text class="text-neutral-600">{currency(item.price)}</Text>
 						</div>
 						<div class="flex items-center gap-8 px-3 py-2 rounded-2 border-2 border-neutral-400">
-							<button on:click={()=>{cart.decrement(index)}}>
+							<button onclick={()=>{cart.decrement(index)}}>
 								<MinusIcon/>
 							</button>
 							<Text>{item.quantity}</Text>
-							<button on:click={()=>{cart.increment(index)}}>
+							<button onclick={()=>{cart.increment(index)}}>
 								<PlusIcon/>
 							</button>
 						</div>
@@ -42,7 +41,7 @@
 			</div>
 			<div class="flex items-center justify-between">
 				<Text weight='medium' size='h5'>Total</Text>
-				<Text weight='medium' size='h5'>{currency(cart.total())}</Text>
+				<Text weight='medium' size='h5'>{currency(cart.total)}</Text>
 			</div>
 		</div>
 		<div class="flex flex-col gap-3">

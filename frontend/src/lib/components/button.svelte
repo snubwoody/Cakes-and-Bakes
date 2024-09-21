@@ -1,10 +1,25 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
+	import type { HTMLButtonAttributes } from 'svelte/elements'
 
-	export let style: 'primary' | 'neutral' | 'bordered' = 'primary';
+	/* export let style: 'primary' | 'neutral' | 'bordered' = 'primary';
 	export let fit:boolean = false;
 	export let onClick:VoidFunction = ()=>{};
-	export let href:string = ""
+	export let href:string = "" */
+	interface Props extends HTMLButtonAttributes {
+		onClick:VoidFunction, 
+		href:string, 
+		fit:boolean,
+		style: 'primary' | 'neutral' | 'bordered',
+	}
+	
+	let {
+		onClick,
+		href = "",
+		fit = false,
+		style = 'primary',
+		...others
+	}:Props = $props()
 
 	const buttonStyle = {
 		primary:'bg-primary-action hover:shadow-lg text-neutral-100',
@@ -15,7 +30,10 @@
 	const buttonSize = fit ? 'w-fit' : 'w-full'
 </script>
 
-<button {...$$restProps} on:click={()=>{onClick();goto(href)}} class={`flex items-center justify-center gap-2 px-8 py-4 rounded-6 ${buttonSize} ${buttonStyle[style]}`}>
+<button 
+	onclick={()=>{onClick();goto(href)}} 
+	class={`flex items-center justify-center gap-2 px-8 py-4 rounded-6 ${buttonSize} ${buttonStyle[style]}`} 
+	{...others}>
 	<slot/>
 </button>
 

@@ -130,9 +130,78 @@ export function useCart(){
 
 export let cart = useCart()
 
+export function createCart(){
+	let items = $state<CartItem[]>([])
+	// FIXME still not working
+	let total = $derived(
+		items.reduce((prevVal,item)=>{
+			return prevVal += item.price * item.quantity
+		},0)
+	)
 
+	if(browser){
+		if(!localStorage.getItem('cart')){
+			localStorage.setItem('cart',JSON.stringify([]))
+		}
+		let cartItems = JSON.parse(localStorage.getItem('cart') ?? '[]')
+		items = cartItems
+	}
 
-
+	return{
+		get items(){
+			return items
+		},
+		get total() {
+			return total
+		},
+		increment: (index:number) => {
+			items[index].quantity += 1;
+			localStorage.setItem('cart',JSON.stringify(items))
+		},
+		decrement: (index:number) => {
+			if (items[index].quantity === 1){
+				return 
+			}
+			items[index].quantity -= 1;
+			localStorage.setItem('cart',JSON.stringify(items))
+		},
+		add: (item:CartItem) => {
+			items.push(item)
+			localStorage.setItem('cart',JSON.stringify(items))
+		},
+		//FIXME remove from cart not working
+		remove: (index:number) => {
+			let newCart = items.filter((item,itemIndex)=>{
+				itemIndex !== index
+			})
+			localStorage.setItem('cart',JSON.stringify(newCart))
+		},
+		// TODO this isn't cart specific so move it out
+		addSale: async (orderInfo:OrderInfo) => {
+			let item = items[0]
+	
+			const order:Order = {
+				flavour:item.flavour,
+				messageType:item.messageType,
+				message:item.message,
+				size:item.size,
+				shape:item.shape,
+				image:item.image,
+				total:20,
+				quantity:1,
+				...orderInfo
+			}
+	
+			const response = await fetch("http://localhost:3000/purchase",{
+				method:"POST",
+				headers:{
+					"Content-Type":"application/json"
+				},
+				body:JSON.stringify(order)
+			})
+		}
+	}	
+}
 export class Cart{
 	items:CartItem[]
 

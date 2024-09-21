@@ -84,7 +84,9 @@
 			</div>
 		</div>
 	</div>
-	<Button onClick={()=>{addToCart()}}>Add to cart</Button>
+	<Button onclick={()=>{alert("It worked")}} fit onClick={()=>{}}>
+		Add to cart
+	</Button>
 	{#if alertActive}
 		<OrderAlert bind:alertActive/>
 	{/if}

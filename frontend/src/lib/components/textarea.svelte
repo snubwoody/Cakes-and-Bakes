@@ -4,6 +4,11 @@
 	export let label:string;
 	export let placeholder:string = "";
 	//FIXME focus not working
+	//TODO try setting to undefined
+	interface Props{
+		label:string,
+		placeholder:string
+	}
 
 </script>	
 
