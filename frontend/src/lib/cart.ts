@@ -1,5 +1,5 @@
 import { browser } from "$app/environment"
-import { writable, type Writable } from "svelte/store"
+import { derived, writable, type Writable } from "svelte/store"
 
 export interface CartItem{
 	flavour:string,
@@ -22,7 +22,7 @@ export interface Order{
     shape:string,
     date:string,
     deliveryMethod:string,
-	image:File | null
+	image:string | null
     address:string,
     total: number,
     quantity: number,
@@ -37,6 +37,101 @@ export interface OrderInfo{
 	address:string,
 	date:string
 }
+
+export function useCart(){
+	let {subscribe, set, update}= writable<CartItem[]>([])
+	if(browser){
+		if(!localStorage.getItem('cart')){
+			localStorage.setItem('cart',JSON.stringify([]))
+		}
+		let cartItems = JSON.parse(localStorage.getItem('cart') ?? '[]')
+		set(cartItems)
+	}
+
+	return {
+		subscribe,
+		//FIXME this is not reactive
+		total: ():number =>  {
+			let total = 0;
+			const unsubscribe = subscribe((items)=>{
+				total = items.reduce((prevVal,item)=>{
+					return prevVal += item.price * item.quantity
+				},0)
+			})
+			//update()
+
+			return total
+		},
+		increment: (index:number) => {
+			update(items => {
+				items[index].quantity += 1;
+				localStorage.setItem('cart',JSON.stringify(items))
+				return items
+			})
+		},
+		decrement: (index:number) => {
+			update(items => {
+				if (items[index].quantity === 1){
+					return items
+				}
+				items[index].quantity -= 1;
+				localStorage.setItem('cart',JSON.stringify(items))
+				return items
+			})
+		},
+		add: (item:CartItem) => {
+			update(items => {
+				items.push(item)
+				localStorage.setItem('cart',JSON.stringify(items))
+				return items
+			})
+		},
+		//FIXME remove from cart not working
+		remove: (index:number) => {
+			update(items => {
+				let newCart = items.filter((item,itemIndex)=>{
+					itemIndex !== index
+				})
+				localStorage.setItem('cart',JSON.stringify(newCart))
+				return newCart
+			})
+		},
+		addSale: async (orderInfo:OrderInfo) => {
+			let cart:CartItem[] = [];
+			let unsubscribe = subscribe((items)=>{
+				cart = items
+			})
+			let item = cart[0]
+	
+			const order:Order = {
+				flavour:item.flavour,
+				messageType:item.messageType,
+				message:item.message,
+				size:item.size,
+				shape:item.shape,
+				image:item.image,
+				total:20,
+				quantity:1,
+				...orderInfo
+			}
+	
+			const response = await fetch("http://localhost:3000/purchase",{
+				method:"POST",
+				headers:{
+					"Content-Type":"application/json"
+				},
+				body:JSON.stringify(order)
+			})
+			unsubscribe()
+		}
+	}
+}
+
+
+export let cart = useCart()
+
+
+
 
 export class Cart{
 	items:CartItem[]

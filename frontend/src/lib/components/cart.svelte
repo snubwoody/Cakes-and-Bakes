@@ -2,11 +2,12 @@
     import { XIcon,MinusIcon,PlusIcon } from "svelte-feather-icons";
 	import Button from "./button.svelte";
     import Text from "./text.svelte";
-    import { Cart } from "$lib/cart";
+    import { Cart,cart } from "$lib/cart";
     import { currency } from "$lib/lib";
 
 	export let open = false;
-	let cart = new Cart()
+	let cartItems = new Cart()
+
 </script>
 
 {#if open}
@@ -19,7 +20,7 @@
 				</button>
 			</div>
 			<div class="flex flex-col gap-5 py-4 max-h-[400px] min-h-[150px] overflow-y-auto border-y-2 border-neutral-400">
-				{#each cart.items as item,index}
+				{#each $cart as item,index}
 					<div class="flex justify-between">
 						<div class="flex flex-col gap-1">
 							<Text size='h6'>{item.flavour}</Text>
@@ -41,7 +42,7 @@
 			</div>
 			<div class="flex items-center justify-between">
 				<Text weight='medium' size='h5'>Total</Text>
-				<Text weight='medium' size='h5'>{currency(cart.total)}</Text>
+				<Text weight='medium' size='h5'>{currency(cart.total())}</Text>
 			</div>
 		</div>
 		<div class="flex flex-col gap-3">
