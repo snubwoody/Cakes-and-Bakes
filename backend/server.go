@@ -119,7 +119,10 @@ func addSale(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	uploadImage(order.Image)
+	// TODO handle image uploads
+	if err := uploadImage(order.Image); err != nil {
+		log.Println(err)
+	}
 
 	// Parse the order back to json to send in the POST request
 	// Parse it twice to make sure it's valid
@@ -156,15 +159,17 @@ func addSale(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 }
 
-func uploadImage(rawData string) {
+func uploadImage(rawData string) error {
 	dataType, data, _ := strings.Cut(rawData, "base64,")
 	log.Println(dataType)
+
 	rawImage, err := base64.StdEncoding.DecodeString(data)
 	if err != nil {
-		log.Println(err)
+		return err
 	}
 
 	os.WriteFile("test.jpg", rawImage, 0644)
+	return nil
 }
 
 type Order struct {

@@ -18,7 +18,7 @@
 					<XIcon/>
 				</button>
 			</div>
-			<div class="flex flex-col gap-2 py-4 max-h-[400px] min-h-[150px] overflow-y-auto">
+			<div class="flex flex-col gap-5 py-4 max-h-[400px] min-h-[150px] overflow-y-auto border-y-2 border-neutral-400">
 				{#each cart.items as item,index}
 					<div class="flex justify-between">
 						<div class="flex flex-col gap-1">
@@ -46,22 +46,23 @@
 		</div>
 		<div class="flex flex-col gap-3">
 			<Button style="bordered">Clear cart</Button>
-			<Button href="/checkout">Checkout</Button>
+			<Button href="/checkout" onClick={()=>{open = false}}>Checkout</Button>
 		</div>
 	</aside>
 {/if}
 
 <style lang="postcss">
 	.cart{
+		width: 100%;
+		max-width: 500px;
+		height: 100dvh;
+		position: fixed;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		width: 100%;
-		height: 100dvh;
-		max-width: 500px;
-		position: fixed;
 		right: 0;
 		top: 0;
+		background: white;
 		border-left: 1px solid theme(colors.neutral.400);
 		padding: theme(spacing.7) theme(spacing.8);
 	}
