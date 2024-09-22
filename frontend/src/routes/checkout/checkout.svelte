@@ -9,6 +9,7 @@
 	export let deliveryMethod:string;
 	let form:HTMLFormElement;
 
+	// TODO change this to the new cart
 	let cart = new Cart()
 
 	//TODO handle null values or maybe just post the data as a form
@@ -26,6 +27,7 @@
 
 		cart.addSale(order)
 	}
+
 </script>
 
 <!--TODO find a way to parse things like dates and card numbers-->

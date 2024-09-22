@@ -1,10 +1,20 @@
 <script lang="ts">
     import Text from "./text.svelte";
 
-	export let name:string;
-	export let label:string;
-	export let placeholder:string = "";
-	export let type:string = "text"
+	interface Props{
+		name:string,
+		label:string,
+		placeholder?:string,
+		type?:string
+	}
+
+	let {
+		name,
+		label,
+		placeholder,
+		type = "text"
+	}:Props = $props()
+
 </script>
 
 <label for={name} class="w-full max-w-full flex flex-col gap-2">

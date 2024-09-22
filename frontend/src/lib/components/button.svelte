@@ -8,14 +8,14 @@
 	export let href:string = "" */
 	interface Props extends HTMLButtonAttributes {
 		onClick:VoidFunction, 
-		href:string, 
-		fit:boolean,
-		style: 'primary' | 'neutral' | 'bordered',
+		href?:string, 
+		fit?:boolean,
+		style?: 'primary' | 'neutral' | 'bordered',
 	}
 	
 	let {
 		onClick,
-		href = "",
+		href,
 		fit = false,
 		style = 'primary',
 		...others
@@ -28,10 +28,12 @@
 	}
 
 	const buttonSize = fit ? 'w-fit' : 'w-full'
+	
 </script>
 
+<!--FIXME the goto might cause problems-->
 <button 
-	onclick={()=>{onClick();goto(href)}} 
+	onclick={()=>{onClick();goto(href ?? '')}} 
 	class={`flex items-center justify-center gap-2 px-8 py-4 rounded-6 ${buttonSize} ${buttonStyle[style]}`} 
 	{...others}>
 	<slot/>

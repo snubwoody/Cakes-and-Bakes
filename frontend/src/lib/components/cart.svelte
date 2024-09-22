@@ -45,7 +45,7 @@
 			</div>
 		</div>
 		<div class="flex flex-col gap-3">
-			<Button style="bordered">Clear cart</Button>
+			<Button style="bordered" onClick={()=>{}}>Clear cart</Button>
 			<Button href="/checkout" onClick={()=>{open = false}}>Checkout</Button>
 		</div>
 	</aside>

@@ -6,7 +6,11 @@
 	import { CheckIcon } from "svelte-feather-icons";
     import { fly } from "svelte/transition";
 
-	export let alertActive:boolean;
+	interface Props {
+		active:boolean
+	}
+
+	let {active = $bindable()}:Props = $props()
 </script>
 
 <div in:fly={{x:'520px',duration:750}} class="order-alert">
@@ -17,7 +21,7 @@
 	<div class="flex items-center gap-2">
 		<!--FIXME this isn't working-->
 		<!--FIXME button wrapping on small screens-->
-		<Button style="bordered" onClick={()=>{alertActive = false; }}>Continue shopping</Button>
+		<Button style="bordered" onClick={()=>{active = false; }}>Continue shopping</Button>
 		<Button href="/checkout" onClick={()=>{}}>Checkout</Button>
 	</div>
 </div>

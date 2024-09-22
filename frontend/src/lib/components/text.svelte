@@ -1,13 +1,17 @@
 <script lang="ts">
+    import type { Snippet } from "svelte";
+	import type { HTMLAttributes } from 'svelte/elements'
+
 	type SizeOptions = 'xs' | 'sm' |'base' | 'h6' | 'h5' | 'h4' | 'h3' | 'h2' | 'h1'
 	type WeightOptions =  'light' | 'regular' |'medium' | 'bold'
 
-	interface Props {
-		size:SizeOptions,
-		weight:WeightOptions
+	interface Props extends HTMLAttributes<HTMLParagraphElement>{
+		size?:SizeOptions,
+		weight?:WeightOptions,
+		children:Snippet
 	}
 
-	let { size = 'base', weight = 'regular' }:Props = $props()
+	let { size = 'base', weight = 'regular',children,...others }:Props = $props()
 
 	const fontSize = {
 		h1:'text-h1',
@@ -39,11 +43,11 @@
 		sm:'leading-sm',
 		xs:'leading-xs',
 	}
-
 	
 </script>
 
-<p class={`${fontWeight[weight]} ${fontSize[size]} ${lineHeight[size]}`} {...$$restProps}>
-	<slot/>
+<!--FIXME cannot use rest props in runes mode-->
+<p class={`${fontWeight[weight]} ${fontSize[size]} ${lineHeight[size]}`} {...others}>
+	{@render children()}
 </p>
 

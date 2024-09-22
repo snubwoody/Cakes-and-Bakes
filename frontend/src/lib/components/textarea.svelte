@@ -1,18 +1,18 @@
 <script lang="ts">
     import Text from "./text.svelte";
 
-	export let label:string;
-	export let placeholder:string = "";
 	//FIXME focus not working
 	//TODO try setting to undefined
 	interface Props{
 		label:string,
-		placeholder:string
+		placeholder:string,
 	}
+
+	let {label,placeholder}:Props = $props()
 
 </script>	
 
-<div class="flex flex-col gap-2 w-full" {...$$restProps}>
+<div class="flex flex-col gap-2 w-full">
 	<Text weight="medium">{ label }</Text>
 	<textarea name="" id="" placeholder={placeholder}></textarea>
 </div>

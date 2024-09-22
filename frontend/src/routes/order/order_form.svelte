@@ -7,18 +7,25 @@
     import Textarea from "$lib/components/textarea.svelte";
     import OrderAlert from "./order_alert.svelte";
 
-	export let image:string | null = null;
+
+	interface Props{
+		image:string | null
+	}
+
+	let {
+		image = $bindable(null)
+	}:Props = $props()
 
 	const cart = new Cart()
 
 	let toppings = ["Oreos","Ferroro rocher","Choc chips","Sprinkles"]
-	let flavour: "Vanilla" | "Chocolate" | "Red velvet";
-	let shape: "Round" | "Square" | "Heart";
-	let size: "Large" | "Medium" | "Small";
-	let messageType: "Topper" | "Icing";
+	let flavour: string = $state("Vanilla");
+	let shape: string = $state("Round");
+	let size: string = $state("Medium");
+	let messageType: string = $state("Topper");
 	let message:string;
 
-	let alertActive = false;
+	let active = $state(false)
 
 	const flavourPrice = {
 		"Vanilla":300,
@@ -49,12 +56,13 @@
 			return
 		}
 
-		let price = flavourPrice[flavour] + shapePrice[shape] + sizePrice[size] + messagePrice[messageType]
-		let item:CartItem = {shape,size,messageType,message,flavour,price,quantity:1,image}
+		// FIXME breaking changes
+		//let price = flavourPrice[flavour] + shapePrice[shape] + sizePrice[size] + messagePrice[messageType]
+		let item:CartItem = {shape,size,messageType,message,flavour,price:200,quantity:1,image}
 		cart.add(item)
 
-		alertActive = true;
-		setTimeout(()=>{alertActive = false},4000)
+		active = true;
+		setTimeout(()=>{active = false},4000)
 	}
 
 	//TODO add the toppings
@@ -84,11 +92,12 @@
 			</div>
 		</div>
 	</div>
-	<Button onclick={()=>{alert("It worked")}} fit onClick={()=>{}}>
+	<Button fit onClick={()=>{}}>
 		Add to cart
 	</Button>
-	{#if alertActive}
-		<OrderAlert bind:alertActive/>
+	{#if active}
+		<!--FIXME this-->
+		<OrderAlert bind:active/>
 	{/if}
 </section>
 
