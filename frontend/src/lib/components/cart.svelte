@@ -2,7 +2,7 @@
     import { XIcon,MinusIcon,PlusIcon } from "svelte-feather-icons";
 	import Button from "./button.svelte";
     import Text from "./text.svelte";
-    import { Cart, createCart } from "$lib/cart";
+    import { Cart, createCart } from "$lib/cart.svelte";
     import { currency } from "$lib/lib";
 
 	export let open = false;

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Cart, type OrderInfo } from "$lib/cart";
+    import { Cart, type OrderInfo } from "$lib/cart.svelte";
     import Button from "$lib/components/button.svelte";
     import Divider from "$lib/components/divider.svelte";
 	import Input from "$lib/components/input.svelte";

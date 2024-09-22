@@ -3,7 +3,7 @@
 	import Text from "$lib/components/text.svelte";
     import { currency } from "$lib/lib";
     import { MinusIcon, PlusIcon } from "svelte-feather-icons";
-	import { cart } from "$lib/cart";
+	import { cart } from "$lib/cart.svelte";
 	
 
 	export let deliveryMethod:string;

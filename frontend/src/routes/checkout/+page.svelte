@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Cart } from "$lib/cart";
+    import { Cart } from "$lib/cart.svelte";
     import Divider from "$lib/components/divider.svelte";
 	import Text from "$lib/components/text.svelte";
     import { MinusIcon, PlusIcon } from "svelte-feather-icons";
