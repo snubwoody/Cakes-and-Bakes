@@ -118,7 +118,9 @@
 			<div class="flex gap-2">
 				<InfoIcon size='24'/>
 				<!--FIXME text colour-->
-				<Text weight='medium'>Note that cakes must be ordered at least 24 hours before the expected pick up date</Text>
+				<Text weight='medium'>
+					Note that cakes must be ordered at least 24 hours before the expected pick up date
+				</Text>
 			</div>
 		</div>
 	</div>
