@@ -46,7 +46,6 @@
 	
 </script>
 
-<!--FIXME cannot use rest props in runes mode-->
 <p class={`${fontWeight[weight]} ${fontSize[size]} ${lineHeight[size]}`} {...others}>
 	{@render children()}
 </p>

@@ -2,10 +2,14 @@
     import { Cart, type CartItem } from "$lib/cart.svelte";
     import Button from "$lib/components/button.svelte";
 	import Checkbox from "$lib/components/checkbox.svelte";
+    import Divider from "$lib/components/divider.svelte";
 	import Dropdown from "$lib/components/dropdown.svelte";
+    import Select from "$lib/components/select.svelte";
 	import Text from "$lib/components/text.svelte";
     import Textarea from "$lib/components/textarea.svelte";
+    import { InfoIcon, PlusIcon, MinusIcon } from "svelte-feather-icons";
     import OrderAlert from "./order_alert.svelte";
+    import Numberpicker from "$lib/components/numberpicker.svelte";
 
 
 	interface Props{
@@ -23,6 +27,7 @@
 	let shape: string = $state("Round");
 	let size: string = $state("Medium");
 	let messageType: string = $state("Topper");
+	let quantity:number = $state(1)
 	let message:string;
 
 	let active = $state(false)
@@ -58,7 +63,7 @@
 
 		// FIXME breaking changes
 		//let price = flavourPrice[flavour] + shapePrice[shape] + sizePrice[size] + messagePrice[messageType]
-		let item:CartItem = {shape,size,messageType,message,flavour,price:200,quantity:1,image}
+		let item:CartItem = {shape,size,messageType,message,flavour,price:200,quantity,image}
 		cart.add(item)
 
 		active = true;
@@ -69,16 +74,37 @@
 </script>
 
 <section class="md:max-w-[550px] sm:border md:border-0 border-l-0 md:border-l border-neutral-400 sm:rounded-5 md:rounded-none">
-	<div class="flex flex-col gap-10 w-full items-center">
-		<Text size="h3" weight="medium">Create your own cake</Text>
+	<div class="flex flex-col gap-6 w-full">
+		<div class="flex flex-col gap-1">
+			<Text size='h4'>Custom cake</Text>
+			<Text weight='medium' size='h5'>K155.00</Text>	
+		</div>
 		<div class="w-full flex flex-col gap-6">
-			<div class="w-full flex items-center gap-8">
-				<Dropdown label="Flavour" items={["Vanilla", "Chocolate","Red velvet"]} bind:activeItem={flavour}/>
-				<Dropdown label="Shape" items={["Round", "Square","Heart"]} bind:activeItem={shape}/>
-			</div>
-			<div class="w-full flex items-center gap-8">
-				<Dropdown label="Size" items={["Large", "Medium","Small"]} bind:activeItem={size}/>
-				<Dropdown label="Message type" items={["Topper", "Icing"]} bind:activeItem={messageType}/>
+			<div class="flex flex-col">
+				<div class="flex items-center justify-between py-2">
+					<Text weight='medium' size='h6'>Flavour</Text>
+					<Select items={["Vanilla", "Chocolate","Red velvet"]} bind:activeItem={flavour}/>
+				</div>
+				<Divider/>
+				<div class="flex items-center justify-between py-2">
+					<Text weight='medium' size='h6'>Size</Text>
+					<Select items={["Large", "Medium","Small"]} bind:activeItem={size}/>
+				</div>
+				<Divider/>
+				<div class="flex items-center justify-between py-2">
+					<Text weight='medium' size='h6'>Shape</Text>
+					<Select items={["Round", "Square","Heart"]} bind:activeItem={shape}/>
+				</div>
+				<Divider/>
+				<div class="flex items-center justify-between py-2">
+					<Text weight='medium' size='h6'>Message Type</Text>
+					<Select items={["Topper", "Icing"]} bind:activeItem={messageType}/>
+				</div>
+				<Divider/>
+				<div class="flex items-center justify-between py-2">
+					<Text weight='medium' size='h6'>Quantity</Text>
+					<Numberpicker bind:number={quantity}/>
+				</div>
 			</div>
 			<Textarea label="Message" placeholder="Type message..."/>
 			<div class="flex flex-col gap-2 w-full">
@@ -90,9 +116,14 @@
 				</li>
 				{/each}
 			</div>
+			<div class="flex gap-2">
+				<InfoIcon size='24'/>
+				<!--FIXME text colour-->
+				<Text weight='medium'>Note that cakes must be ordered at least 24 hours before the expected pick up date</Text>
+			</div>
 		</div>
 	</div>
-	<Button fit onClick={()=>{}}>
+	<Button fit onClick={()=>{addToCart}}>
 		Add to cart
 	</Button>
 	{#if active}
@@ -104,9 +135,9 @@
 <style lang="postcss">
 	section{
 		flex:1;
-		min-height: 100dvh;
 		background-color: white;
 		display: flex;
+		gap:theme(spacing.8);
 		flex-direction: column;
 		align-items: center;
 		padding: theme(spacing.8);
