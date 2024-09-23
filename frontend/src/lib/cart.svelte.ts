@@ -176,6 +176,10 @@ export function createCart(){
 			})
 			localStorage.setItem('cart',JSON.stringify(newCart))
 		},
+		empty(){
+			items = [],
+			localStorage.setItem('cart',JSON.stringify(items))
+		},
 		// TODO this isn't cart specific so move it out
 		addSale: async (orderInfo:OrderInfo) => {
 			let item = items[0]

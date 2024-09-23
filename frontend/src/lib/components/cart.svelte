@@ -4,8 +4,12 @@
     import Text from "./text.svelte";
     import { Cart, createCart } from "$lib/cart.svelte";
     import { currency } from "$lib/lib";
+    import { goto } from "$app/navigation";
 
-	export let open = false;
+	let {
+		open = $bindable(false)
+	} = $props()
+
 	let cart = createCart()
 </script>
 
@@ -45,8 +49,8 @@
 			</div>
 		</div>
 		<div class="flex flex-col gap-3">
-			<Button style="bordered" onClick={()=>{}}>Clear cart</Button>
-			<Button href="/checkout" onClick={()=>{open = false}}>Checkout</Button>
+			<Button style="bordered" onclick={cart.empty}>Clear cart</Button>
+			<Button onclick={()=>{goto("/checkout")}}>Checkout</Button>
 		</div>
 	</aside>
 {/if}

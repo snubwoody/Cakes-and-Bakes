@@ -7,7 +7,8 @@
 	export let onClick:VoidFunction = ()=>{};
 	export let href:string = "" */
 	interface Props extends HTMLButtonAttributes {
-		onClick:VoidFunction, 
+		//TODO these are deprecated
+		onClick?:VoidFunction, 
 		href?:string, 
 		fit?:boolean,
 		style?: 'primary' | 'neutral' | 'bordered',
@@ -33,7 +34,7 @@
 
 <!--FIXME the goto might cause problems-->
 <button 
-	onclick={()=>{onClick();goto(href ?? '')}} 
+	
 	class={`flex items-center justify-center gap-2 px-8 py-4 rounded-6 ${buttonSize} ${buttonStyle[style]}`} 
 	{...others}>
 	<slot/>

@@ -56,6 +56,7 @@
 	}
 
 	function addToCart(){
+		console.log("Hey")
 		if(!(flavour || shape || size || messageType)){
 			alert("Please fill in everything")
 			return
@@ -123,7 +124,7 @@
 			</div>
 		</div>
 	</div>
-	<Button fit onClick={()=>{addToCart}}>
+	<Button onclick={addToCart}>
 		Add to cart
 	</Button>
 	{#if active}
