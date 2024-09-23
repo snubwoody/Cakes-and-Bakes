@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Cart, type OrderInfo } from "$lib/cart.svelte";
+    import { type OrderInfo,cart } from "$lib/cart.svelte";
     import Button from "$lib/components/button.svelte";
     import Divider from "$lib/components/divider.svelte";
 	import Input from "$lib/components/input.svelte";
@@ -9,8 +9,6 @@
 	export let deliveryMethod:string;
 	let form:HTMLFormElement;
 
-	// TODO change this to the new cart
-	let cart = new Cart()
 
 	//TODO handle null values or maybe just post the data as a form
 	function addPurchase(){

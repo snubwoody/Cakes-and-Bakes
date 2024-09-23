@@ -27,7 +27,7 @@
 		bordered:'border border-neutral-400 hover:bg-neutral-200 text-neutral-900',
 		neutral:'bg-neutral-900 text-neutral-100 hover:bg-neutral-800'
 	}
-
+ 
 	const buttonSize = fit ? 'w-fit' : 'w-full'
 	
 </script>

@@ -128,7 +128,7 @@ export function useCart(){
 }
 
 
-export let cart = useCart()
+export let cart = createCart()
 
 export function createCart(){
 	let items = $state<CartItem[]>([])
@@ -160,6 +160,8 @@ export function createCart(){
 		},
 		decrement: (index:number) => {
 			if (items[index].quantity === 1){
+				items.splice(index,1)
+				localStorage.setItem('cart',JSON.stringify(items))
 				return 
 			}
 			items[index].quantity -= 1;
@@ -169,14 +171,7 @@ export function createCart(){
 			items.push(item)
 			localStorage.setItem('cart',JSON.stringify(items))
 		},
-		//FIXME remove from cart not working
-		remove: (index:number) => {
-			let newCart = items.filter((item,itemIndex)=>{
-				itemIndex !== index
-			})
-			localStorage.setItem('cart',JSON.stringify(newCart))
-		},
-		empty(){
+		empty: () => {
 			items = [],
 			localStorage.setItem('cart',JSON.stringify(items))
 		},

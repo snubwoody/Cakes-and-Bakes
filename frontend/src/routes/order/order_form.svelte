@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Cart, type CartItem } from "$lib/cart.svelte";
+    import { type CartItem,cart } from "$lib/cart.svelte";
     import Button from "$lib/components/button.svelte";
 	import Checkbox from "$lib/components/checkbox.svelte";
     import Divider from "$lib/components/divider.svelte";
@@ -20,7 +20,6 @@
 		image = $bindable(null)
 	}:Props = $props()
 
-	const cart = new Cart()
 
 	let toppings = ["Oreos","Ferroro rocher","Choc chips","Sprinkles"]
 	let flavour: string = $state("Vanilla");
@@ -56,7 +55,6 @@
 	}
 
 	function addToCart(){
-		console.log("Hey")
 		if(!(flavour || shape || size || messageType)){
 			alert("Please fill in everything")
 			return
@@ -124,11 +122,8 @@
 			</div>
 		</div>
 	</div>
-	<Button onclick={addToCart}>
-		Add to cart
-	</Button>
+	<Button onclick={addToCart}>Add to cart</Button>
 	{#if active}
-		<!--FIXME this-->
 		<OrderAlert bind:active/>
 	{/if}
 </section>

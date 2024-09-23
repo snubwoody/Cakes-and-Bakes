@@ -13,8 +13,8 @@
 	<Text size="h3" weight="medium">Order summary</Text>
 	<div class="h-[220px] flex flex-col justify-between overflow-y-auto">
 		<div class="flex flex-col gap-2">
-			{#if $cart.length !== 0}
-				{#each $cart as item,index}
+			{#if cart.items.length !== 0}
+				{#each cart.items as item,index}
 				<div class="flex justify-between">
 					<div class="flex flex-col gap-1">
 						<Text size='h6'>{item.flavour}</Text>
@@ -37,7 +37,7 @@
 		</div>
 		<div class="flex items-center justify-between">
 			<Text>Sub-total</Text>
-			<Text>{currency(cart.total())}</Text>
+			<Text>{currency(cart.total)}</Text>
 		</div>
 	</div>
 	<Divider/>
@@ -50,7 +50,7 @@
 		</div>
 		<div class="flex items-center justify-between">
 			<Text size='h5' weight='medium'>Total</Text>
-			<Text size='h5' weight='medium'>{deliveryMethod === "Delivery" ? currency(cart.total() + 50) : currency(cart.total())}</Text>
+			<Text size='h5' weight='medium'>{deliveryMethod === "Delivery" ? currency(cart.total + 50) : currency(cart.total)}</Text>
 		</div>
 	</div>
 </section>

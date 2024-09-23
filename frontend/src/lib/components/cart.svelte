@@ -2,7 +2,7 @@
     import { XIcon,MinusIcon,PlusIcon } from "svelte-feather-icons";
 	import Button from "./button.svelte";
     import Text from "./text.svelte";
-    import { Cart, createCart } from "$lib/cart.svelte";
+    import { Cart, createCart,cart } from "$lib/cart.svelte";
     import { currency } from "$lib/lib";
     import { goto } from "$app/navigation";
 
@@ -10,7 +10,6 @@
 		open = $bindable(false)
 	} = $props()
 
-	let cart = createCart()
 </script>
 
 {#if open}
