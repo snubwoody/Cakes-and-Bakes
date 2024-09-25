@@ -35,7 +35,7 @@
 				file = e.target.result
 			}
 		}
-		reader.readAsDataURL(image)
+		reader.readAsDataURL(image) 
 	}
 </script>
 
@@ -58,7 +58,7 @@
 					class="hidden"
 				>
 			</div>
-			<Button fit onClick={()=>{imageInput.click()}} style="bordered">Upload an image</Button>
+			<Button fit onclick={()=>{imageInput.click()}} style="bordered">Upload an image</Button>
 		</div>
 	</section>
 	<OrderForm bind:image={file}/>
