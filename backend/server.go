@@ -7,6 +7,7 @@ import (
 	"fmt"
 	_ "image/jpeg"
 	_ "image/png"
+	"io"
 	"log"
 	"math/big"
 	"net/http"
@@ -97,8 +98,8 @@ func server() {
 	})
 	router.Post("/purchase", addSale)
 
-	log.Printf("The server is running on port :3000")
-	http.ListenAndServe(":3000", router)
+	log.Printf("The server is running on port localhost:3000")
+	http.ListenAndServe("localhost:3000", router)
 }
 
 // TODO add state and sharedId
@@ -119,6 +120,8 @@ func addSale(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	log.Println(order)
+
 	// TODO handle image uploads
 	if err := uploadImage(order.Image); err != nil {
 		log.Println(err)
@@ -133,7 +136,11 @@ func addSale(w http.ResponseWriter, r *http.Request) {
 
 	client := http.Client{}
 
-	request, err := http.NewRequest("POST", "https://xgeaoarxkbluxxzuxyeb.supabase.co/rest/v1/sales", bytes.NewBuffer(orderBody))
+	request, err := http.NewRequest(
+		"POST",
+		"https://xgeaoarxkbluxxzuxyeb.supabase.co/rest/v1/sales",
+		bytes.NewBuffer(orderBody),
+	)
 	if err != nil {
 		log.Println(err)
 	}
@@ -148,13 +155,14 @@ func addSale(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	defer resp.Body.Close()
 
 	if resp.StatusCode == 400 {
-		//log.Println(resp)
+		body, err := io.ReadAll(resp.Body)
+		log.Println(string(body), err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	defer resp.Body.Close()
 
 	w.WriteHeader(http.StatusCreated)
 }

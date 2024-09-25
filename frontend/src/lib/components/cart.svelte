@@ -49,7 +49,7 @@
 		</div>
 		<div class="flex flex-col gap-3">
 			<Button style="bordered" onclick={cart.empty}>Clear cart</Button>
-			<Button onclick={()=>{goto("/checkout")}}>Checkout</Button>
+			<Button onclick={()=>{goto("/checkout");open = false}}>Checkout</Button>
 		</div>
 	</aside>
 {/if}

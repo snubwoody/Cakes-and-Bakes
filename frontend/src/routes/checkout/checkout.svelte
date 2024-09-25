@@ -16,11 +16,11 @@
 
 		let order:OrderInfo = {
 			name:String(formData.get("name")),
-			phoneNumber:String(formData.get("phoneNumber")),
+			phone_number:String(formData.get("phoneNumber")),
 			email:String(formData.get("email")),
 			address:String(formData.get("address")),
 			date:String(formData.get("date")),
-			deliveryMethod:deliveryMethod
+			delivery_method:deliveryMethod
 		}
 
 		cart.addSale(order)
@@ -47,6 +47,6 @@
 				<Input name="date" label="Pick up date" placeholder="DD / MM / YYYY"/>
 			{/if}
 		</div>
-		<Button onClick={()=>{addPurchase()}}>Confirm purchase</Button>
+		<Button onclick={addPurchase}>Confirm purchase</Button>
 	</form>
 </section>

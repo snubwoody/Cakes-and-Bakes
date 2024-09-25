@@ -14,14 +14,14 @@ export interface CartItem{
 
 export interface Order{
     name:string,
-    phoneNumber:string,
+    phone_number:string,
     email:string,
-    messageType:string,
+    message_type:string,
     flavour:string,
     size:string,
     shape:string,
     date:string,
-    deliveryMethod:string,
+    delivery_method:string,
 	image:string | null
     address:string,
     total: number,
@@ -32,8 +32,8 @@ export interface Order{
 export interface OrderInfo{
 	name:string,
 	email:string,
-	phoneNumber:string,
-	deliveryMethod:string,
+	phone_number:string,
+	delivery_method:string,
 	address:string,
 	date:string
 }
@@ -90,7 +90,7 @@ export function createCart(){
 			
 			const order:Order = {
 				flavour:item.flavour,
-				messageType:item.messageType,
+				message_type:item.messageType,
 				message:item.message,
 				size:item.size,
 				shape:item.shape,
@@ -99,7 +99,8 @@ export function createCart(){
 				quantity:1,
 				...orderInfo
 			}
-			
+
+			// TODO handle the different response types
 			const response = await fetch("http://localhost:3000/purchase",{
 				method:"POST",
 				headers:{
