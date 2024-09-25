@@ -18,9 +18,7 @@
 			name:String(formData.get("name")),
 			phone_number:String(formData.get("phoneNumber")),
 			email:String(formData.get("email")),
-			address:String(formData.get("address")),
 			date:String(formData.get("date")),
-			delivery_method:deliveryMethod
 		}
 
 		cart.addSale(order)
@@ -38,14 +36,8 @@
 			<Input name="phoneNumber" label="Phone number" placeholder="09xxxxxxxx"/>	
 		</div>
 		<Divider/>
-		<div class="flex flex-col gap-6">
-			<Tabs options={["Delivery","Pick-up"]} bind:activeOption={deliveryMethod}/>
-			{#if deliveryMethod === "Delivery"}
-				<Input name="address" label="Address"/>
-				<Input name="date" label="Delivery date" placeholder="DD / MM / YYYY"/>	
-			{:else}
-				<Input name="date" label="Pick up date" placeholder="DD / MM / YYYY"/>
-			{/if}
+		<div class="flex flex-col">		
+			<Input name="date" label="Pick up date" placeholder="DD / MM / YYYY"/>
 		</div>
 		<Button onclick={addPurchase}>Confirm purchase</Button>
 	</form>

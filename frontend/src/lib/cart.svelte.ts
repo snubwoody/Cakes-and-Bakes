@@ -21,9 +21,7 @@ export interface Order{
     size:string,
     shape:string,
     date:string,
-    delivery_method:string,
 	image:string | null
-    address:string,
     total: number,
     quantity: number,
     message?:string
@@ -33,8 +31,6 @@ export interface OrderInfo{
 	name:string,
 	email:string,
 	phone_number:string,
-	delivery_method:string,
-	address:string,
 	date:string
 }
 
