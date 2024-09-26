@@ -6,7 +6,6 @@
     import Tabs from "$lib/components/tabs.svelte";
 	import Text from "$lib/components/text.svelte";
 	
-	export let deliveryMethod:string;
 	let form:HTMLFormElement;
 
 

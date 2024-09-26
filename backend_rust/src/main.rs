@@ -10,9 +10,6 @@ use tower_http::cors::{Any, CorsLayer};
 async fn main() {
 	dotenv().expect(".env file not found");
 
-	let api_key = env::var("SERVICE_KEY").expect("API_KEY must be set");
-	dbg!(api_key);
-
 	let cors = CorsLayer::new()
 		.allow_methods([http::Method::POST,http::Method::GET,])
 		.allow_headers(Any)
@@ -33,25 +30,37 @@ async fn active() -> &'static str{
 }
 
 async fn add_sale(Json(payload):Json<OrderRequest>) -> StatusCode{
+	//FIXME handle missing values
 	let client = Client::new();
+	let api_key = env::var("SERVICE_KEY").unwrap();
+
 	let mut headers = HeaderMap::new();
-	headers.insert(AUTHORIZATION, "Bearer".parse().unwrap());
+	headers.insert(AUTHORIZATION, format!("Bearer {}",api_key).parse().unwrap() );
+	headers.insert("apiKey", api_key.parse().unwrap() );
 	headers.insert(CONTENT_TYPE, "application/json".parse().unwrap());
-	headers.insert("apiKey", "application/json".parse().unwrap());
 	headers.insert("prefer", "return=minimal".parse().unwrap());
 
+	let body = OrderBody::from(payload);
 	let response = client.post("https://xgeaoarxkbluxxzuxyeb.supabase.co/rest/v1/sales")
-		.body("")
 		.headers(headers)
+		.json(&body)
 		.send().await;
 
-	dbg!(response);
-
-	dbg!(payload);
-	StatusCode::CREATED
+	dbg!(serde_json::to_string(&body).unwrap());
+	match response {
+		Ok(resp) => {
+			let status = resp.status();
+			dbg!(&resp.text().await.unwrap());
+			status
+		}
+		Err(err) => {
+			dbg!(err);
+			StatusCode::INTERNAL_SERVER_ERROR
+		}
+	}
 }	
 
-#[derive(Deserialize,Debug)]
+#[derive(Serialize,Deserialize,Debug)]
 struct OrderRequest{
 	name:String,
 	phone_number:String,
@@ -62,10 +71,12 @@ struct OrderRequest{
 	flavour:String,
 	total:f32,
 	quantity:i32,
+	size:String,
+	shape:String,
 	message:Option<String>
 }
 
-#[derive(Debug,Serialize)]
+#[derive(Debug,Serialize,Deserialize)]
 struct OrderBody{
 	name:String,
 	phone_number:String,
@@ -75,5 +86,25 @@ struct OrderBody{
 	flavour:String,
 	total:f32,
 	quantity:i32,
+	size:String,
+	shape:String,
 	message:Option<String>
+}
+
+impl From<OrderRequest> for OrderBody {
+	fn from(order: OrderRequest) -> Self {
+		Self { 
+			name:order.name, 
+			phone_number: order.phone_number, 
+			email: order.email, 
+			date: order.date, 
+			message_type: order.message_type, 
+			flavour: order.flavour, 
+			total: order.total, 
+			quantity: order.quantity, 
+			message: order.message,
+			size: order.size,
+			shape: order.shape
+		}
+	}
 }

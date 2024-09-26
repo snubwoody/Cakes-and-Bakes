@@ -30,7 +30,7 @@
 		regular:'font-regular',
 		medium:'font-medium',
 		bold:'font-bold',
-	}
+	} 
 
 	const lineHeight = {
 		h1:'leading-lg',

@@ -1,7 +1,8 @@
 <script lang="ts">
     import Text from "./text.svelte";
+	import type { HTMLLabelAttributes } from "svelte/elements";
 
-	interface Props{
+	interface Props extends HTMLLabelAttributes{
 		name:string,
 		label:string,
 		placeholder?:string,
@@ -12,12 +13,13 @@
 		name,
 		label,
 		placeholder,
-		type = "text"
+		type = "text",
+		...others
 	}:Props = $props()
 
 </script>
 
-<label for={name} class="w-full max-w-full flex flex-col gap-2">
+<label for={name} class="w-full max-w-full flex flex-col gap-2" {...others}>
 	<Text weight="medium">{label}</Text>
 	<input {type} {placeholder} {name} class="px-4 py-3 rounded-2 border border-neutral-400 focus:border-primary-dark outline-none">
 </label>
