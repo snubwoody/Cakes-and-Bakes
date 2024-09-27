@@ -5,6 +5,7 @@
 	import Input from "$lib/components/input.svelte";
     import Tabs from "$lib/components/tabs.svelte";
 	import Text from "$lib/components/text.svelte";
+    import Page from "./+page.svelte";
 	
 	let form:HTMLFormElement;
 
@@ -30,7 +31,6 @@
 
 		cart.addSale(order)
 	}
-
 </script>
 
 <!--TODO find a way to parse things like dates and card numbers-->
@@ -44,7 +44,7 @@
 		</div>
 		<Divider/>
 		<div class="flex flex-col">		
-			<Input required name="date" label="Pick up date" placeholder="DD / MM / YYYY"/>
+			<Input required oninput={maskDate} name="date" type="date" label="Pick up date" placeholder="DD / MM / YYYY"/>
 		</div>
 		<Button type="submit" onclick={addPurchase}>Confirm purchase</Button>
 	</form>
