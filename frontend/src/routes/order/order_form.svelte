@@ -30,29 +30,7 @@
 	let message:string;
 
 	let active = $state(false)
-
-	const flavourPrice = {
-		"Vanilla":300,
-		"Chocolate":500,
-		"Red velvet":600
-	}
-
-	const shapePrice = {
-		"Round":50,
-		"Square":100,
-		"Heart":150
-	}
-
-	const sizePrice = {
-		"Large":300,
-		"Medium":200,
-		"Small":100
-	}
-
-	const messagePrice = {
-		"Topper":100,
-		"Icing":100
-	}
+	let selectedToppings:string[] = []
 
 	function addToCart(){
 		if(!(flavour || shape || size || messageType)){
@@ -61,8 +39,17 @@
 		}
 
 		// FIXME breaking changes
-		//let price = flavourPrice[flavour] + shapePrice[shape] + sizePrice[size] + messagePrice[messageType]
-		let item:CartItem = {shape,size,messageType,message,flavour,price:200,quantity,image}
+		let item:CartItem = {
+			shape,
+			size,
+			messageType,
+			message,
+			flavour,
+			price:200,
+			quantity,
+			toppings,
+			image
+		}
 		cart.add(item)
 
 		active = true;
@@ -109,10 +96,17 @@
 			<div class="flex flex-col gap-2 w-full">
 				<Text weight="medium">Toppings</Text>
 				{#each toppings as topping}
-				<li class="flex items-center justify-between">
-					<Text class="text-neutral-600">{ topping }</Text>
-					<Checkbox/>
-				</li>
+					<li class="flex items-center justify-between">
+						<Text class="text-neutral-600">{ topping }</Text>
+						<Checkbox 
+							value={topping} 
+							onchecked={(value)=>{selectedToppings.push(value);console.log(selectedToppings)}}
+							onunchecked={(value)=>{
+								let index = selectedToppings.indexOf(value)
+								selectedToppings.splice(index,1)
+							}}
+						/>
+					</li>
 				{/each}
 			</div>
 			<div class="flex gap-2">

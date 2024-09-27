@@ -9,6 +9,7 @@ export interface CartItem{
 	message?:string,
 	quantity:number,
 	price:number,
+	toppings:string[],
 	image:string | null
 }
 
@@ -24,6 +25,7 @@ export interface Order{
 	image:string | null
     total: number,
     quantity: number,
+	toppings:string[],
     message?:string
 }
 
@@ -35,6 +37,7 @@ export interface OrderInfo{
 }
 
 
+// TODO change this to a class 
 export function createCart(){
 	let items = $state<CartItem[]>([])
 
@@ -91,6 +94,7 @@ export function createCart(){
 				size:item.size,
 				shape:item.shape,
 				image:item.image,
+				toppings:item.toppings,
 				total:200,
 				quantity:item.quantity,
 				...orderInfo

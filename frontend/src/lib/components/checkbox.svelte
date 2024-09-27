@@ -1,12 +1,35 @@
 <script lang="ts">
     import { CheckIcon } from "svelte-feather-icons";
 
-	let checked = false;
+	let checked = $state(false);
+
+	interface Props{
+		onchecked?: (value:string) => void,
+		onunchecked?: (value:string) => void,
+		value: string
+	}
+
+	let {
+		onchecked = (value) => {},
+		onunchecked = (value) => {},
+		value
+	}:Props = $props()
+
+	const handleClick = () => {
+		checked = !checked 
+
+		if (checked) {
+			onchecked(value)
+		}
+		else {
+			onunchecked(value)
+		}
+	}
 </script>
 <!--TODO change this to an actual checkbox-->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<div on:click={()=>{checked = !checked}} class="{checked ? 'checkbox-active' : 'checkbox-inactive'} checkbox">
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div onclick={handleClick} class="{checked ? 'checkbox-active' : 'checkbox-inactive'} checkbox">
 	{#if checked}
 		<CheckIcon size="15"  class="text-neutral-100"/>
 	{/if}

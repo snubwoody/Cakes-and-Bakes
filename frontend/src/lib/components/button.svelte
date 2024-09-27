@@ -30,7 +30,7 @@
 
 <!--FIXME the goto might cause problems-->
 <button 
-	class={`button ${size} ${radius} ${buttonSize} ${style} z-50`} 
+	class={`button ${size} ${radius} ${buttonSize} ${style}`} 
 	{...others}>
 	{@render children()}
 </button>
