@@ -24,7 +24,11 @@
 		<a class="text-h5 font-medium leading-md" href="/">Cakes and bakes</a>
 	</div>
 	<div class='flex items-center gap-5 md:gap-6'>
-		<Button radius='square' size='small' style='bordered' onclick={()=>{goto("/order")}}>Create a cake</Button>
+		<div class="hidden md:flex">
+			<Button radius='square' size='small' style='bordered' onclick={()=>{goto("/order")}}>
+				Create a cake
+			</Button>
+		</div>
 		<button onclick={()=>{open = !open}} class="relative">
 			<ShoppingCartIcon size='24'/>
 			<div class="absolute size-[15px] rounded-6 bg-primary-action text-neutral-100 top-[-5px] right-[-8px]">
