@@ -4,7 +4,7 @@
     import { currency } from "$lib/lib";
     import { MinusIcon, PlusIcon } from "svelte-feather-icons";
 	import { cart } from "$lib/cart.svelte";
-	
+    import { tweened } from "svelte/motion";
 
 </script>
 

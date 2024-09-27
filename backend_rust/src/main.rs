@@ -73,10 +73,12 @@ struct OrderRequest{
 	quantity:i32,
 	size:String,
 	shape:String,
+	toppings:Vec<String>,
 	message:Option<String>
 }
 
 #[derive(Debug,Serialize,Deserialize)]
+#[serde(deny_unknown_fields)]
 struct OrderBody{
 	name:String,
 	phone_number:String,
@@ -88,6 +90,7 @@ struct OrderBody{
 	quantity:i32,
 	size:String,
 	shape:String,
+	toppings:Vec<String>,
 	message:Option<String>
 }
 
@@ -104,6 +107,7 @@ impl From<OrderRequest> for OrderBody {
 			quantity: order.quantity, 
 			message: order.message,
 			size: order.size,
+			toppings: order.toppings,
 			shape: order.shape
 		}
 	}
