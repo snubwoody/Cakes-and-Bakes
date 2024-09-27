@@ -46,7 +46,6 @@ async fn add_sale(Json(payload):Json<OrderRequest>) -> StatusCode{
 		.json(&body)
 		.send().await;
 
-	dbg!(serde_json::to_string(&body).unwrap());
 	match response {
 		Ok(resp) => {
 			let status = resp.status();
@@ -61,6 +60,7 @@ async fn add_sale(Json(payload):Json<OrderRequest>) -> StatusCode{
 }	
 
 #[derive(Serialize,Deserialize,Debug)]
+#[serde(deny_unknown_fields)]
 struct OrderRequest{
 	name:String,
 	phone_number:String,

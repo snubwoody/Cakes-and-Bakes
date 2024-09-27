@@ -37,7 +37,7 @@ export interface OrderInfo{
 
 export function createCart(){
 	let items = $state<CartItem[]>([])
-	// FIXME still not working
+
 	let total = $derived(
 		items.reduce((prevVal,item)=>{
 			return prevVal += item.price * item.quantity
@@ -91,8 +91,8 @@ export function createCart(){
 				size:item.size,
 				shape:item.shape,
 				image:item.image,
-				total:20,
-				quantity:1,
+				total:200,
+				quantity:item.quantity,
 				...orderInfo
 			}
 

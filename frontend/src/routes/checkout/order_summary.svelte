@@ -6,7 +6,6 @@
 	import { cart } from "$lib/cart.svelte";
 	
 
-	export let deliveryMethod:string;
 </script>
 
 <section class="hidden lg:flex flex-col w-full max-w-[500px] h-fit gap-5 p-7 rounded-3 border border-neutral-400">
@@ -43,14 +42,8 @@
 	<Divider/>
 	<div class="flex flex-col gap-4">
 		<div class="flex items-center justify-between">
-			{#if deliveryMethod === "Delivery"}
-				<Text>Delivery fee</Text>
-				<Text>{currency(50)}</Text>
-			{/if}
-		</div>
-		<div class="flex items-center justify-between">
 			<Text size='h5' weight='medium'>Total</Text>
-			<Text size='h5' weight='medium'>{deliveryMethod === "Delivery" ? currency(cart.total + 50) : currency(cart.total)}</Text>
+			<Text size='h5' weight='medium'>{currency(cart.total)}</Text>
 		</div>
 	</div>
 </section>

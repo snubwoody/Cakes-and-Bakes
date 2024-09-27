@@ -7,13 +7,12 @@
     import OrderSummary from "./order_summary.svelte";
 
 	
-	let deliveryMethod:string = "Pick-up";
 </script>
 
 <svelte:head>
 	<title>Checkout</title>	
 </svelte:head>
 <main class="flex justify-center lg:justify-between px-5 sm:px-12 py-8 sm:py-10">
-	<Checkout bind:deliveryMethod/>
-	<OrderSummary bind:deliveryMethod/>
+	<Checkout/>
+	<OrderSummary/>
 </main>

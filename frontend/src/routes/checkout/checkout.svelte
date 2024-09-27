@@ -8,11 +8,19 @@
 	
 	let form:HTMLFormElement;
 
-
 	//TODO handle null values or maybe just post the data as a form
 	function addPurchase(){
-		let formData = new FormData(form)
+		if (!form.checkValidity()){
+			alert("Please fill in all the values")
+			return
+		}
 
+		if (cart.items.length === 0) {
+			alert("Your cart is empty")
+			return
+		}
+
+		let formData = new FormData(form)
 		let order:OrderInfo = {
 			name:String(formData.get("name")),
 			phone_number:String(formData.get("phoneNumber")),
@@ -30,14 +38,14 @@
 	<Text weight="medium" size="h1">Checkout</Text>
 	<form bind:this={form} class="w-full flex flex-col gap-8">
 		<div class="flex flex-col gap-6">
-			<Input name="name" label="Name" placeholder="John doe"/>
-			<Input name="email" label="Email" placeholder="example@email.com"/>
-			<Input name="phoneNumber" label="Phone number" placeholder="09xxxxxxxx"/>	
+			<Input required name="name" label="Name" placeholder="John doe"/>
+			<Input required name="email" label="Email" placeholder="example@email.com"/>
+			<Input required name="phoneNumber" label="Phone number" placeholder="09xxxxxxxx"/>	
 		</div>
 		<Divider/>
 		<div class="flex flex-col">		
-			<Input name="date" label="Pick up date" placeholder="DD / MM / YYYY"/>
+			<Input required name="date" label="Pick up date" placeholder="DD / MM / YYYY"/>
 		</div>
-		<Button onclick={addPurchase}>Confirm purchase</Button>
+		<Button type="submit" onclick={addPurchase}>Confirm purchase</Button>
 	</form>
 </section>

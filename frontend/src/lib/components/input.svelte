@@ -6,7 +6,8 @@
 		name:string,
 		label:string,
 		placeholder?:string,
-		type?:string
+		type?:string,
+		required?:boolean
 	}
 
 	let {
@@ -14,6 +15,7 @@
 		label,
 		placeholder,
 		type = "text",
+		required = false,
 		...others
 	}:Props = $props()
 
@@ -21,7 +23,7 @@
 
 <label for={name} class="w-full max-w-full flex flex-col gap-2" {...others}>
 	<Text weight="medium">{label}</Text>
-	<input {type} {placeholder} {name} class="px-4 py-3 rounded-2 border border-neutral-400 focus:border-primary-dark outline-none">
+	<input {required} {type} {placeholder} {name} class="px-4 py-3 rounded-2 border border-neutral-400 focus:border-primary-dark outline-none">
 </label>
 
 <style lang="postcss">
