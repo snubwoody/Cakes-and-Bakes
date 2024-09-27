@@ -32,9 +32,6 @@
 		cart.addSale(order)
 	}
 
-	function maskDate(input){
-		console.log(input.target.value)
-	}
 
 </script>
 
@@ -49,7 +46,7 @@
 		</div>
 		<Divider/>
 		<div class="flex flex-col">		
-			<Input required oninput={maskDate} name="date" label="Pick up date" placeholder="DD / MM / YYYY"/>
+			<Input required name="date" label="Pick up date" placeholder="DD / MM / YYYY"/>
 		</div>
 		<Button type="submit" onclick={addPurchase}>Confirm purchase</Button>
 	</form>
