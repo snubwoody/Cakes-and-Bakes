@@ -56,7 +56,6 @@
 		setTimeout(()=>{active = false},4000)
 	}
 
-	//TODO add the toppings
 </script>
 
 <section class="md:max-w-[550px] sm:border md:border-0 border-l-0 md:border-l border-neutral-400 sm:rounded-5 md:rounded-none">
