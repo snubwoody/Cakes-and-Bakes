@@ -44,7 +44,7 @@
 		</div>
 		<Divider/>
 		<div class="flex flex-col">		
-			<Input required oninput={maskDate} name="date" type="date" label="Pick up date" placeholder="DD / MM / YYYY"/>
+			<Input required name="date" type="date" label="Pick up date" placeholder="DD / MM / YYYY"/>
 		</div>
 		<Button type="submit" onclick={addPurchase}>Confirm purchase</Button>
 	</form>
