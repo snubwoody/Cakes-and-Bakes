@@ -25,7 +25,7 @@
 	let flavour: string = $state("Vanilla");
 	let shape: string = $state("Round");
 	let size: string = $state("Medium");
-	let messageType: string = $state("Topper");
+	let message_type: string = $state("Topper");
 	let quantity:number = $state(1)
 	let message:string;
 
@@ -33,7 +33,7 @@
 	let selectedToppings:string[] = []
 
 	function addToCart(){
-		if(!(flavour || shape || size || messageType)){
+		if(!(flavour || shape || size || message_type)){
 			alert("Please fill in everything")
 			return
 		}
@@ -42,7 +42,7 @@
 		let item:CartItem = {
 			shape,
 			size,
-			messageType,
+			message_type,
 			message,
 			flavour,
 			price:200,
@@ -83,7 +83,7 @@
 				<Divider/>
 				<div class="flex items-center justify-between py-2">
 					<Text weight='medium' size='h6'>Message Type</Text>
-					<Select items={["Topper", "Icing"]} bind:activeItem={messageType}/>
+					<Select items={["Topper", "Icing"]} bind:activeItem={message_type}/>
 				</div>
 				<Divider/>
 				<div class="flex items-center justify-between py-2">

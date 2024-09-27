@@ -4,7 +4,7 @@ import { derived, writable, type Writable } from "svelte/store"
 export interface CartItem{
 	flavour:string,
 	size:string,
-	messageType:string,
+	message_type:string,
 	shape:string,
 	message?:string,
 	quantity:number,
@@ -17,16 +17,8 @@ export interface Order{
     name:string,
     phone_number:string,
     email:string,
-    message_type:string,
-    flavour:string,
-    size:string,
-    shape:string,
     date:string,
-	image:string | null
-    total: number,
-    quantity: number,
-	toppings:string[],
-    message?:string
+	items:CartItem[]
 }
 
 export interface OrderInfo{
@@ -85,18 +77,9 @@ export function createCart(){
 		},
 		// TODO this isn't cart specific so move it out
 		addSale: async (orderInfo:OrderInfo) => {
-			let item = items[0]
 			
 			const order:Order = {
-				flavour:item.flavour,
-				message_type:item.messageType,
-				message:item.message,
-				size:item.size,
-				shape:item.shape,
-				image:item.image,
-				toppings:item.toppings,
-				total:200,
-				quantity:item.quantity,
+				items:cart.items,
 				...orderInfo
 			}
 
