@@ -3,15 +3,12 @@
     import type { Snippet } from "svelte";
 	import type { HTMLButtonAttributes } from 'svelte/elements'
 
-	/* export let style: 'primary' | 'neutral' | 'bordered' = 'primary';
-	export let fit:boolean = false;
-	export let onClick:VoidFunction = ()=>{};
-	export let href:string = "" */
 	interface Props extends HTMLButtonAttributes {
 		fit?:boolean,
 		style?: 'primary' | 'neutral' | 'bordered',
 		size?:'small' | 'medium',
 		radius?:'rounded' | 'square',
+		class? : string,
 		children:Snippet
 	}
 	
@@ -20,17 +17,16 @@
 		style = 'primary',
 		size = 'medium',
 		radius = 'rounded',
+		class:externalClass,
 		children,
 		...others
 	}:Props = $props()
 
-	const buttonSize = fit ? 'w-fit' : 'w-full'
-	
 </script>
 
 <!--FIXME the goto might cause problems-->
 <button 
-	class={`button ${size} ${radius} ${buttonSize} ${style}`} 
+	class={`button ${size} ${radius} ${style} ${externalClass}`} 
 	{...others}>
 	{@render children()}
 </button>
@@ -59,7 +55,7 @@
 	}
 
 	.primary{
-		@apply bg-primary-action hover:shadow-lg text-neutral-100;
+		@apply bg-primary-action hover:shadow-primary-lg text-neutral-100;
 		transition: all 150ms;
 	}
 
