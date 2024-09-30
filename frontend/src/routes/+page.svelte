@@ -13,7 +13,13 @@
 		<div class="size-[31px] rounded-full shadow-primary-lg bg-primary-action text-neutral-100 flex items-center justify-center">
 			<CheckIcon size='20' class="text-neutral-100"/>
 		</div>
-		<p class="absolute text-nowrap bottom-[-30px] text-neutral-700 sm md:base">{text}</p>
+		<p class="absolute text-nowrap bottom-[-30px] text-neutral-700 small md:base">{text}</p>
+	</div>
+{/snippet}
+
+{#snippet LoadingBar()}
+	<div class="outer-bar">
+		<div class="inner-bar"></div>
 	</div>
 {/snippet}
 
@@ -36,9 +42,9 @@
 	</div>
 	<div class="flex max-w-[800px] w-full items-center">
 		{@render Checkpoint("100% Organic")}
-		<div class="w-full h-2 bg-primary-action shadow-primary-lg"></div>
+		{@render LoadingBar()}
 		{@render Checkpoint("Vegeterian friendly")}
-		<div class="w-full h-2 bg-primary-action shadow-primary-lg"></div>
+		{@render LoadingBar()}
 		{@render Checkpoint("Halaal")}
 	</div>
 </main>
@@ -52,5 +58,26 @@
 		justify-content: center;
 		align-items: center;
 		height: calc(100dvh - 75px);
+	}
+
+	.outer-bar{
+		@apply w-full h-2 relative border-y border-neutral-400;
+	}
+
+	@keyframes bar-animation{
+		from{
+			width: 0px;
+		}
+
+		to{
+			width: 100%;
+		}
+	}
+
+	.inner-bar{
+		@apply bg-primary-action shadow-primary-lg;
+		width: 100%;
+		height:100%;
+		animation: bar-animation 5s ease;
 	}
 </style>

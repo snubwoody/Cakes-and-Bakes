@@ -5,6 +5,7 @@
     import { createCart,cart } from "$lib/cart.svelte";
     import { currency } from "$lib/lib";
     import { goto } from "$app/navigation";
+    import { fly, slide } from "svelte/transition";
 
 	let {
 		open = $bindable(false)
@@ -13,7 +14,7 @@
 </script>
 
 {#if open}
-	<aside class="cart">
+	<aside transition:fly={{x:300,duration:500}} class="cart">
 		<div class="flex flex-col gap-4">
 			<div class="flex items-center justify-between">
 				<Text weight="medium" size='h3'>Cart</Text>
