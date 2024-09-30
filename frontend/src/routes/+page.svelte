@@ -9,12 +9,12 @@
 
 
 	let firstWidth = tweened(0,{
-		duration:3500,
+		duration:2900,
 		easing:cubicInOut
 	})
 	let secondWidth = tweened(0,{
-		duration:3500,
-		delay:3500,
+		duration:2900,
+		delay:2900,
 		easing:cubicInOut
 	})
 
@@ -28,7 +28,7 @@
 
 {#snippet Checkpoint(text,index)}
 	<div class='relative flex justify-center'>
-		<div style={`animation-delay:${index * 3650}ms`} class="checkpoint-icon">
+		<div style={`animation-delay:${index * 3050}ms`} class="checkpoint-icon">
 			<CheckIcon size='20' class="text-neutral-100"/>
 		</div>
 		<p class="absolute text-nowrap bottom-[-30px] text-neutral-700 small md:base">{text}</p>
