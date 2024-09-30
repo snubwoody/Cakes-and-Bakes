@@ -1,25 +1,43 @@
-<script>
+<script lang="ts">
     import { goto } from "$app/navigation";
     import Button from "$lib/components/button.svelte";
 	import Text from "$lib/components/text.svelte";
     import { text } from "@sveltejs/kit";
     import { ShoppingBagIcon, CheckIcon } from "svelte-feather-icons";
+    import { cubicInOut } from "svelte/easing";
+    import { tweened } from "svelte/motion";
+
+
+	let firstWidth = tweened(0,{
+		duration:3500,
+		easing:cubicInOut
+	})
+	let secondWidth = tweened(0,{
+		duration:3500,
+		delay:3500,
+		easing:cubicInOut
+	})
+
+	$effect(()=>{
+		firstWidth.set(100)
+		secondWidth.set(100)
+	})
 
 
 </script>
 
-{#snippet Checkpoint(text)}
+{#snippet Checkpoint(text,index)}
 	<div class='relative flex justify-center'>
-		<div class="size-[31px] rounded-full shadow-primary-lg bg-primary-action text-neutral-100 flex items-center justify-center">
+		<div style={`animation-delay:${index * 3650}ms`} class="checkpoint-icon">
 			<CheckIcon size='20' class="text-neutral-100"/>
 		</div>
 		<p class="absolute text-nowrap bottom-[-30px] text-neutral-700 small md:base">{text}</p>
 	</div>
 {/snippet}
 
-{#snippet LoadingBar()}
+{#snippet LoadingBar(width)}
 	<div class="outer-bar">
-		<div class="inner-bar"></div>
+		<div style:width={`${width}%`}  class="inner-bar"></div>
 	</div>
 {/snippet}
 
@@ -41,11 +59,11 @@
 		</Button>
 	</div>
 	<div class="flex max-w-[800px] w-full items-center">
-		{@render Checkpoint("100% Organic")}
-		{@render LoadingBar()}
-		{@render Checkpoint("Vegeterian friendly")}
-		{@render LoadingBar()}
-		{@render Checkpoint("Halaal")}
+		{@render Checkpoint("100% Organic",0)}
+		{@render LoadingBar($firstWidth)}
+		{@render Checkpoint("Vegeterian friendly",1)}
+		{@render LoadingBar($secondWidth)}
+		{@render Checkpoint("Halaal",2)}
 	</div>
 </main>
 
@@ -64,20 +82,29 @@
 		@apply w-full h-2 relative border-y border-neutral-400;
 	}
 
-	@keyframes bar-animation{
+	.inner-bar{
+		@apply bg-primary-action shadow-primary-lg;
+		height:100%;
+	}
+
+	@keyframes checkpoint-anim{
 		from{
-			width: 0px;
+			background-color: white;
+			box-shadow: none;
+			border: 1px solid theme(colors.neutral.400);
 		}
 
 		to{
-			width: 100%;
+			background-color: theme(colors.primary.action);
+			box-shadow: theme(boxShadow.primary-lg);
+			border: 1px solid theme(colors.primary.action);
 		}
 	}
 
-	.inner-bar{
-		@apply bg-primary-action shadow-primary-lg;
-		width: 100%;
-		height:100%;
-		animation: bar-animation 5s ease;
+	.checkpoint-icon{
+		@apply size-[31px] rounded-full shadow-primary-lg text-neutral-100 flex items-center justify-center;
+		background-color: theme(colors.primary.action);
+		animation: checkpoint-anim 500ms ease-in-out;
+		animation-fill-mode:backwards;
 	}
 </style>
