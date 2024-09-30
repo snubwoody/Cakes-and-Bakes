@@ -1,3 +1,5 @@
+mod utils;
+mod orders;
 use axum::{
     response,
     routing::{get, post},
@@ -8,9 +10,12 @@ use http::{
     header::{AUTHORIZATION, CONTENT_TYPE},
     HeaderMap,
 };
+use orders::{OrderBody, OrderRequest};
 use reqwest::{Client, StatusCode};
 use serde::{Deserialize, Serialize};
-use std::env;
+use ulid::Ulid;
+use utils::generate_shared_id;
+use std::{env, time::{UNIX_EPOCH,SystemTime},};
 use tower_http::cors::{Any, CorsLayer};
 
 #[tokio::main]
@@ -30,6 +35,7 @@ async fn main() {
     let listener = tokio::net::TcpListener::bind("localhost:3000")
         .await
         .unwrap();
+		
     axum::serve(listener, app).await.unwrap();
 }
 
@@ -51,10 +57,12 @@ async fn add_sale(Json(payload): Json<OrderRequest>) -> StatusCode {
     headers.insert(CONTENT_TYPE, "application/json".parse().unwrap());
     headers.insert("prefer", "return=minimal".parse().unwrap());
 
+	let shared_id = Ulid::new().to_string();
+
     let body:Vec<OrderBody> = payload
         .items
         .iter()
-        .map(|item| OrderBody::new(&payload, item))
+        .map(|item| OrderBody::new(&payload, item,&shared_id))
 		.collect();
 
     let response = client
@@ -75,64 +83,4 @@ async fn add_sale(Json(payload): Json<OrderRequest>) -> StatusCode {
             StatusCode::INTERNAL_SERVER_ERROR
         }
     }
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-#[serde(deny_unknown_fields)]
-struct OrderRequest {
-    pub name: String,
-    pub phone_number: String,
-    pub email: String,
-    pub date: String,
-    pub items: Vec<Order>,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
-struct OrderBody {
-    pub name: String,
-    pub phone_number: String,
-    pub email: String,
-    pub date: String,
-	pub total: f32,
-    pub message_type: String,
-    pub flavour: String,
-    pub quantity: i32,
-    pub size: String,
-    pub shape: String,
-    pub toppings: Vec<String>,
-    pub message: Option<String>,
-}
-
-impl OrderBody {
-    pub fn new(payload:&OrderRequest,item:&Order) -> Self {
-        Self {
-            name: payload.name.clone(),
-            phone_number: payload.phone_number.clone(),
-            email: payload.email.clone(),
-            date: payload.date.clone(),
-            total: item.price.clone(),
-            message_type: item.message_type.clone(),
-            flavour: item.flavour.clone(),
-            quantity: item.quantity.clone(),
-            size: item.size.clone(),
-            shape: item.shape.clone(),
-            toppings: item.toppings.clone(),
-            message: item.message.clone(),
-        }
-    }
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
-struct Order {
-    pub flavour: String,
-    pub shape: String,
-    pub size: String,
-	pub price:f32,
-    pub quantity: i32,
-	pub image: Option<String>,
-    pub toppings: Vec<String>,
-    pub message: Option<String>,
-    pub message_type: String,
 }
