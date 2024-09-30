@@ -41,7 +41,7 @@
 	</div>
 {/snippet}
 
-<main class=''>
+<main>
 	<div class="flex flex-col items-center gap-10 max-w-[680px]">
 		<div class="flex flex-col items-center gap-4">
 			<h1 class='h3 md:h1'>Cakes & Bakes</h1>

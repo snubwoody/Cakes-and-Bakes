@@ -1,4 +1,5 @@
 import { browser } from "$app/environment"
+import { goto } from "$app/navigation"
 import { derived, writable, type Writable } from "svelte/store"
 
 export interface CartItem{
@@ -91,6 +92,14 @@ export function createCart(){
 				},
 				body:JSON.stringify(order)
 			})
+
+			if (response.ok){
+				cart.empty()
+				goto("/checkout/success")
+				return
+			}
+
+			alert("Something went wrong, please try again")
 		}
 	}	
 }
