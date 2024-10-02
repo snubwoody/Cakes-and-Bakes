@@ -24,7 +24,6 @@
 
 </script>
 
-<!--FIXME the goto might cause problems-->
 <button 
 	class={`button ${size} ${radius} ${style} ${externalClass}`} 
 	{...others}>
