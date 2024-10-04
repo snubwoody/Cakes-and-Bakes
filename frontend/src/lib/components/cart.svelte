@@ -68,7 +68,7 @@
 		top: 0;
 		background: white;
 		border-left: 1px solid theme(colors.neutral.400);
-		z-index:400;
+		z-index:100;
 		padding: theme(spacing.7) theme(spacing.8);
 	}
 </style>

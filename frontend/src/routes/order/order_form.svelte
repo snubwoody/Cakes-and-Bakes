@@ -117,7 +117,7 @@
 			</div>
 		</div>
 	</div>
-	<Button onclick={addToCart}>Add to cart</Button>
+	<button class="btn-medium btn-rounded btn-primary w-full" onclick={addToCart}>Add to cart</button>
 	{#if active}
 		<OrderAlert bind:active/>
 	{/if}

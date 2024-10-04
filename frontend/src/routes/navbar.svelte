@@ -32,7 +32,7 @@
 		<button onclick={()=>{open = !open}} class="relative">
 			<ShoppingCartIcon size='24'/>
 			<div class="absolute size-[15px] rounded-6 bg-primary-action text-neutral-100 top-[-5px] right-[-8px]">
-				<Text size='xs'>{cart.items.length}</Text>
+				<p class="extra-small text-neutral-100">{cart.items.length}</p>
 			</div>
 		</button>
 		<div class="flex items-center gap-5 md:hidden">

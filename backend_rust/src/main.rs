@@ -1,7 +1,7 @@
 mod utils;
 mod orders;
+mod image;
 use axum::{
-    response,
     routing::{get, post},
     Json, Router,
 };
@@ -10,11 +10,11 @@ use http::{
     header::{AUTHORIZATION, CONTENT_TYPE},
     HeaderMap,
 };
+use image::decode_image;
 use orders::{OrderBody, OrderRequest};
 use reqwest::{Client, StatusCode};
-use serde::{Deserialize, Serialize};
 use ulid::Ulid;
-use std::{env, time::{UNIX_EPOCH,SystemTime},};
+use std::env;
 use tower_http::cors::{Any, CorsLayer};
 
 #[tokio::main]
@@ -24,7 +24,7 @@ async fn main() {
     let cors = CorsLayer::new()
         .allow_methods([http::Method::POST, http::Method::GET])
         .allow_headers(Any)
-        .allow_origin(Any);
+        .allow_origin(Any); //TODO change this in PROD
 
     let app = Router::new()
         .route("/active", get(active))
@@ -63,6 +63,21 @@ async fn add_sale(Json(payload): Json<OrderRequest>) -> StatusCode {
         .iter()
         .map(|item| OrderBody::new(&payload, item,&shared_id))
 		.collect();
+
+	payload.items.iter().for_each(|item|{
+		match item.image {
+			Some(ref image) => {
+				match decode_image(image.as_str()) {
+					Ok((bytes,format)) => {
+						dbg!(format);
+					}
+					Err(_) => {}
+				}
+				
+			},
+			None => {}	
+		}
+	});
 
     let response = client
         .post("https://xgeaoarxkbluxxzuxyeb.supabase.co/rest/v1/sales")
