@@ -14,7 +14,6 @@ use orders::{OrderBody, OrderRequest};
 use reqwest::{Client, StatusCode};
 use serde::{Deserialize, Serialize};
 use ulid::Ulid;
-use utils::generate_shared_id;
 use std::{env, time::{UNIX_EPOCH,SystemTime},};
 use tower_http::cors::{Any, CorsLayer};
 
