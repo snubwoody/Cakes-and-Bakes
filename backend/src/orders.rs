@@ -1,9 +1,11 @@
 use serde::{Deserialize, Serialize};
+use uuid::Uuid;
 
 /// The order that is sent to the database
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct OrderBody {
+	pub id:String,
     pub name: String,
     pub phone_number: String,
     pub email: String,
@@ -20,8 +22,9 @@ pub struct OrderBody {
 }
 
 impl OrderBody {
-    pub fn new(payload:&OrderRequest,item:&Order,shared_id:&String) -> Self {
+    pub fn new(payload:&OrderRequest,item:&Order,shared_id:&String,id:Uuid) -> Self {
         Self {
+			id:id.into(),
             name: payload.name.clone(),
             phone_number: payload.phone_number.clone(),
             email: payload.email.clone(),
