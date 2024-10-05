@@ -1,0 +1,46 @@
+@layer base{
+	summary{
+		list-style: none;
+		cursor: pointer;
+	}
+
+	summary::-webkit-details-marker{
+		display: none;
+	}
+}
+
+@layer components{
+	.dropdown{
+		position: relative;
+	}
+
+	.dropdown-header{
+		border:1px solid theme(colors.neutral.400);
+		border-radius: theme(borderRadius.2);
+		padding: theme(spacing.2) theme(spacing.3);
+	}
+
+	.menu{
+		display:flex;
+		flex-direction:column;
+		position:absolute;
+		gap:theme(spacing.2);
+		padding: theme(spacing.2);
+		box-shadow: theme(boxShadow.base);
+		border-radius: theme(borderRadius.2);
+		background:white;
+		z-index:50;
+		min-width:100%;
+	}
+
+	.menu-item{
+		border-radius: theme(borderRadius.1);
+		padding: theme(spacing.2);
+		cursor:pointer;
+		@apply text-nowrap;
+	}
+
+	.menu-item:hover{
+		background: theme(colors.neutral.400)
+	}
+}

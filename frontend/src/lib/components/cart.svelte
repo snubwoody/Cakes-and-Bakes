@@ -2,15 +2,19 @@
     import { XIcon,MinusIcon,PlusIcon } from "svelte-feather-icons";
 	import Button from "./button.svelte";
     import Text from "./text.svelte";
-    import { Cart, createCart } from "$lib/cart.svelte";
+    import { createCart,cart } from "$lib/cart.svelte";
     import { currency } from "$lib/lib";
+    import { goto } from "$app/navigation";
+    import { fly, slide } from "svelte/transition";
 
-	export let open = false;
-	let cart = createCart()
+	let {
+		open = $bindable(false)
+	} = $props()
+
 </script>
 
 {#if open}
-	<aside class="cart">
+	<aside transition:fly={{x:300,duration:500}} class="cart">
 		<div class="flex flex-col gap-4">
 			<div class="flex items-center justify-between">
 				<Text weight="medium" size='h3'>Cart</Text>
@@ -45,8 +49,8 @@
 			</div>
 		</div>
 		<div class="flex flex-col gap-3">
-			<Button style="bordered" onClick={()=>{}}>Clear cart</Button>
-			<Button href="/checkout" onClick={()=>{open = false}}>Checkout</Button>
+			<Button style="bordered" onclick={cart.empty}>Clear cart</Button>
+			<Button onclick={()=>{goto("/checkout");open = false}}>Checkout</Button>
 		</div>
 	</aside>
 {/if}
@@ -64,6 +68,7 @@
 		top: 0;
 		background: white;
 		border-left: 1px solid theme(colors.neutral.400);
+		z-index:100;
 		padding: theme(spacing.7) theme(spacing.8);
 	}
 </style>

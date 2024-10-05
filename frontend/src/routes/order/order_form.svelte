@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Cart, type CartItem } from "$lib/cart.svelte";
+    import { type CartItem,cart } from "$lib/cart.svelte";
     import Button from "$lib/components/button.svelte";
 	import Checkbox from "$lib/components/checkbox.svelte";
     import Divider from "$lib/components/divider.svelte";
@@ -20,57 +20,42 @@
 		image = $bindable(null)
 	}:Props = $props()
 
-	const cart = new Cart()
 
 	let toppings = ["Oreos","Ferroro rocher","Choc chips","Sprinkles"]
 	let flavour: string = $state("Vanilla");
 	let shape: string = $state("Round");
 	let size: string = $state("Medium");
-	let messageType: string = $state("Topper");
+	let message_type: string = $state("Topper");
 	let quantity:number = $state(1)
 	let message:string;
 
 	let active = $state(false)
-
-	const flavourPrice = {
-		"Vanilla":300,
-		"Chocolate":500,
-		"Red velvet":600
-	}
-
-	const shapePrice = {
-		"Round":50,
-		"Square":100,
-		"Heart":150
-	}
-
-	const sizePrice = {
-		"Large":300,
-		"Medium":200,
-		"Small":100
-	}
-
-	const messagePrice = {
-		"Topper":100,
-		"Icing":100
-	}
+	let selectedToppings:string[] = []
 
 	function addToCart(){
-		if(!(flavour || shape || size || messageType)){
+		if(!(flavour || shape || size || message_type)){
 			alert("Please fill in everything")
 			return
 		}
 
 		// FIXME breaking changes
-		//let price = flavourPrice[flavour] + shapePrice[shape] + sizePrice[size] + messagePrice[messageType]
-		let item:CartItem = {shape,size,messageType,message,flavour,price:200,quantity,image}
+		let item:CartItem = {
+			shape,
+			size,
+			message_type,
+			message,
+			flavour,
+			price:200,
+			quantity,
+			toppings,
+			image
+		}
 		cart.add(item)
 
 		active = true;
 		setTimeout(()=>{active = false},4000)
 	}
 
-	//TODO add the toppings
 </script>
 
 <section class="md:max-w-[550px] sm:border md:border-0 border-l-0 md:border-l border-neutral-400 sm:rounded-5 md:rounded-none">
@@ -98,7 +83,7 @@
 				<Divider/>
 				<div class="flex items-center justify-between py-2">
 					<Text weight='medium' size='h6'>Message Type</Text>
-					<Select items={["Topper", "Icing"]} bind:activeItem={messageType}/>
+					<Select items={["Topper", "Icing"]} bind:activeItem={message_type}/>
 				</div>
 				<Divider/>
 				<div class="flex items-center justify-between py-2">
@@ -110,24 +95,30 @@
 			<div class="flex flex-col gap-2 w-full">
 				<Text weight="medium">Toppings</Text>
 				{#each toppings as topping}
-				<li class="flex items-center justify-between">
-					<Text class="text-neutral-600">{ topping }</Text>
-					<Checkbox/>
-				</li>
+					<li class="flex items-center justify-between">
+						<Text class="text-neutral-600">{ topping }</Text>
+						<Checkbox 
+							value={topping} 
+							onchecked={(value)=>{selectedToppings.push(value);console.log(selectedToppings)}}
+							onunchecked={(value)=>{
+								let index = selectedToppings.indexOf(value)
+								selectedToppings.splice(index,1)
+							}}
+						/>
+					</li>
 				{/each}
 			</div>
 			<div class="flex gap-2">
 				<InfoIcon size='24'/>
 				<!--FIXME text colour-->
-				<Text weight='medium'>Note that cakes must be ordered at least 24 hours before the expected pick up date</Text>
+				<Text weight='medium'>
+					Note that cakes must be ordered at least 24 hours before the expected pick up date
+				</Text>
 			</div>
 		</div>
 	</div>
-	<Button fit onClick={()=>{addToCart}}>
-		Add to cart
-	</Button>
+	<button class="btn-medium btn-rounded btn-primary w-full" onclick={addToCart}>Add to cart</button>
 	{#if active}
-		<!--FIXME this-->
 		<OrderAlert bind:active/>
 	{/if}
 </section>

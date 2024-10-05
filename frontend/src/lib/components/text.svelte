@@ -8,10 +8,17 @@
 	interface Props extends HTMLAttributes<HTMLParagraphElement>{
 		size?:SizeOptions,
 		weight?:WeightOptions,
+		class?:string,
 		children:Snippet
 	}
 
-	let { size = 'base', weight = 'regular',children,...others }:Props = $props()
+	let { 
+		size = 'base', 
+		weight = 'regular',
+		children,
+		class:externalClass,
+		...others 
+	}:Props = $props()
 
 	const fontSize = {
 		h1:'text-h1',
@@ -30,15 +37,15 @@
 		regular:'font-regular',
 		medium:'font-medium',
 		bold:'font-bold',
-	}
+	} 
 
 	const lineHeight = {
 		h1:'leading-lg',
 		h2:'leading-lg',
 		h3:'leading-lg',
-		h6:'leading-lg',
 		h4:'leading-lg',
-		h5:'leading-md',
+		h5:'leading-lg',
+		h6:'leading-md',
 		base:'leading-md',
 		sm:'leading-sm',
 		xs:'leading-xs',
@@ -46,7 +53,13 @@
 	
 </script>
 
-<p class={`${fontWeight[weight]} ${fontSize[size]} ${lineHeight[size]}`} {...others}>
+<p 
+class={`${fontWeight[weight]} ${fontSize[size]} ${lineHeight[size]} ${externalClass}`} 
+{...others}>
 	{@render children()}
 </p>
+
+<style lang="scss">
+	
+</style>
 

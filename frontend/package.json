@@ -25,6 +25,7 @@
 	"dependencies": {
 		"@supabase/supabase-js": "^2.45.4",
 		"bakery-svelte": "file:",
+		"postcss-import": "^16.1.0",
 		"sass-embedded": "^1.78.0",
 		"svelte-feather-icons": "^4.1.0"
 	}

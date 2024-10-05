@@ -4,17 +4,16 @@
     import { currency } from "$lib/lib";
     import { MinusIcon, PlusIcon } from "svelte-feather-icons";
 	import { cart } from "$lib/cart.svelte";
-	
+    import { tweened } from "svelte/motion";
 
-	export let deliveryMethod:string;
 </script>
 
 <section class="hidden lg:flex flex-col w-full max-w-[500px] h-fit gap-5 p-7 rounded-3 border border-neutral-400">
 	<Text size="h3" weight="medium">Order summary</Text>
 	<div class="h-[220px] flex flex-col justify-between overflow-y-auto">
 		<div class="flex flex-col gap-2">
-			{#if $cart.length !== 0}
-				{#each $cart as item,index}
+			{#if cart.items.length !== 0}
+				{#each cart.items as item,index}
 				<div class="flex justify-between">
 					<div class="flex flex-col gap-1">
 						<Text size='h6'>{item.flavour}</Text>
@@ -37,20 +36,14 @@
 		</div>
 		<div class="flex items-center justify-between">
 			<Text>Sub-total</Text>
-			<Text>{currency(cart.total())}</Text>
+			<Text>{currency(cart.total)}</Text>
 		</div>
 	</div>
 	<Divider/>
 	<div class="flex flex-col gap-4">
 		<div class="flex items-center justify-between">
-			{#if deliveryMethod === "Delivery"}
-				<Text>Delivery fee</Text>
-				<Text>{currency(50)}</Text>
-			{/if}
-		</div>
-		<div class="flex items-center justify-between">
 			<Text size='h5' weight='medium'>Total</Text>
-			<Text size='h5' weight='medium'>{deliveryMethod === "Delivery" ? currency(cart.total() + 50) : currency(cart.total())}</Text>
+			<Text size='h5' weight='medium'>{currency(cart.total)}</Text>
 		</div>
 	</div>
 </section>
