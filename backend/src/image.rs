@@ -1,11 +1,6 @@
 use std::io::Cursor;
-
 use base64::{engine::general_purpose, Engine};
 use image::ImageReader;
-
-
-
-
 
 pub fn decode_image(input:&str) -> Result<(Vec<u8>,&str),()>{
 	let split_image:Vec<&str> = input.split(";base64,").collect();

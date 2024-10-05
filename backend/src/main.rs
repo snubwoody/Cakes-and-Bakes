@@ -54,7 +54,6 @@ async fn add_sale(Json(payload): Json<OrderRequest>) -> StatusCode {
     );
     headers.insert("apiKey", api_key.parse().unwrap());
     headers.insert(CONTENT_TYPE, "application/json".parse().unwrap());
-    headers.insert("prefer", "return=minimal".parse().unwrap());
 
 	let shared_id = Ulid::new().to_string();
 
