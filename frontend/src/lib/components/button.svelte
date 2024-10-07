@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
     import type { Snippet } from "svelte";
 	import type { HTMLButtonAttributes } from 'svelte/elements'
 
