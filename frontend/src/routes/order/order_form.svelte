@@ -1,11 +1,10 @@
 <script lang="ts">
     import { type CartItem,cart } from "$lib/cart.svelte";
 	import Checkbox from "$lib/components/checkbox.svelte";
-	import Text from "$lib/components/text.svelte";
     import Textarea from "$lib/components/textarea.svelte";
     import { InfoIcon } from "svelte-feather-icons";
     import OrderAlert from "./order_alert.svelte";
-    import SelectChip from "$lib/components/Select-Chip/select-chip.svelte";
+	import { SelectChip, SelectGroup } from "$lib/components/Select-Chip";
     import Tabgroup from "$lib/components/Tab-Group/tabgroup.svelte";
     import TextGroup from "$lib/components/Text-Group/text-group.svelte";
 
@@ -20,7 +19,7 @@
 
 
 	let toppings = ["Oreos","Ferroro rocher","Choc chips","Sprinkles"]
-	let flavour: string = $state("Vanilla");
+	let flavour: string = $state("");
 	let shape: string = $state("Round");
 	let size: string = $state("Medium");
 	let message_type: string = $state("Topper");
@@ -32,6 +31,7 @@
 	let messageType = $state("Topper")
 
 	function addToCart(){
+		//TODO change this
 		if(!(flavour || shape || size || message_type)){
 			alert("Please fill in everything")
 			return
@@ -70,20 +70,20 @@
 			</div>
 			<div class="flex flex-col gap-4">
 				<h4>Shape</h4>
-				<div class="flex gap-6">
-					<SelectChip>Round</SelectChip>
-					<SelectChip>Square</SelectChip>
-					<SelectChip>Heart</SelectChip>
-				</div>
+				<SelectGroup bind:activeOption={shape}>
+					<SelectChip value="Round">Round</SelectChip>
+					<SelectChip value="Square">Square</SelectChip>
+					<SelectChip value="Heart">Heart</SelectChip>
+				</SelectGroup>
 			</div>
 			<div class="flex flex-col gap-4">
 				<h4>Size</h4>
-				<div class="flex gap-6">
-					<SelectChip>Small</SelectChip>
-					<SelectChip showSubtext subtext="+K100">Medium</SelectChip>
-					<SelectChip showSubtext subtext="+K400">Big</SelectChip>
-					<SelectChip showSubtext subtext="+K650">Large</SelectChip>
-				</div>
+				<SelectGroup bind:activeOption={size}>
+					<SelectChip value="Small">Small</SelectChip>
+					<SelectChip value="Medium" showSubtext subtext="+K100">Medium</SelectChip>
+					<SelectChip value="Big" showSubtext subtext="+K400">Big</SelectChip>
+					<SelectChip value="Large" showSubtext subtext="+K650">Large</SelectChip>
+				</SelectGroup>
 			</div>
 			<div class="flex flex-col gap-5">
 				<Tabgroup bind:activeOption={messageType} options={["Topper","Icing"]}/>

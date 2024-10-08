@@ -1,17 +1,32 @@
 <script lang='ts'>
-    import type { Snippet } from "svelte";
+    import { getContext, type Snippet } from "svelte";
+    import type { Writable } from "svelte/store";
 
 	interface Props{
 		children:Snippet,
 		subtext?:string,
-		showSubtext?:boolean
-	}
+		showSubtext?:boolean,
+		value:string,
+	};
 
-	let { children, subtext, showSubtext = false }:Props = $props()
-	console.log(showSubtext)
+	let { 
+		children, 
+		subtext, 
+		value, 
+		showSubtext = false
+	}:Props = $props();
+
+	let activeOption:Writable<string> = getContext('activeOption');
+	let setActiveOption: (value:string) => void = getContext('setActiveOption');
+	console.log(activeOption,setActiveOption);
 </script>
+
 <!--FIXME style error-->
-<div class="select-chip {showSubtext ? 'with-subtext' : null}">
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div 
+onclick={()=>{setActiveOption(value)}}
+class="select-chip {showSubtext ? 'with-subtext' : null} {value === $activeOption ? 'active-select' : null}">
 	{@render children()}	
 	{#if showSubtext}
 		<p class="font-light small text-neutral-700">{ subtext ?? "" }</p>
@@ -34,6 +49,11 @@
 		background: theme(colors.primary.lightest);
 		border: 1px solid theme(colors.primary.light);
 		scale:1.05;
+	}
+
+	.active-select{
+		background: theme(colors.primary.lightest);
+		border: 1px solid theme(colors.primary.light);
 	}
 
 	.with-subtext{
