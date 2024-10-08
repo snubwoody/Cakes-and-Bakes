@@ -20,6 +20,6 @@
 	setContext('setActiveOption',setOption)
 </script>
 
-<div class="flex gap-6 overflow-x-auto" {...others}>
+<div class="flex gap-6 overflow-x-auto h-fit" {...others}>
 	{@render children()}
 </div>
