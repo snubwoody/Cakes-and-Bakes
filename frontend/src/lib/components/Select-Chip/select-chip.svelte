@@ -18,7 +18,6 @@
 
 	let activeOption:Writable<string> = getContext('activeOption');
 	let setActiveOption: (value:string) => void = getContext('setActiveOption');
-	console.log(activeOption,setActiveOption);
 </script>
 
 <!--FIXME style error-->

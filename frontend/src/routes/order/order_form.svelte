@@ -20,8 +20,8 @@
 
 	let toppings = ["Oreos","Ferroro rocher","Choc chips","Sprinkles"]
 	let flavour: string = $state("");
-	let shape: string = $state("Round");
-	let size: string = $state("Medium");
+	let shape: string = $state("");
+	let size: string = $state("");
 	let message_type: string = $state("Topper");
 	let quantity:number = $state(1)
 	let message:string;
@@ -79,7 +79,7 @@
 			<div class="flex flex-col gap-4">
 				<h4>Size</h4>
 				<SelectGroup bind:activeOption={size}>
-					<SelectChip value="Small">Small</SelectChip>
+					<SelectChip value="Small" showSubtext>Small</SelectChip>
 					<SelectChip value="Medium" showSubtext subtext="+K100">Medium</SelectChip>
 					<SelectChip value="Big" showSubtext subtext="+K400">Big</SelectChip>
 					<SelectChip value="Large" showSubtext subtext="+K650">Large</SelectChip>
