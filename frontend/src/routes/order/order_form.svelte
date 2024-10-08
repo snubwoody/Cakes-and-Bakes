@@ -1,15 +1,12 @@
 <script lang="ts">
     import { type CartItem,cart } from "$lib/cart.svelte";
-    import Button from "$lib/components/button.svelte";
 	import Checkbox from "$lib/components/checkbox.svelte";
-    import Divider from "$lib/components/divider.svelte";
-	import Dropdown from "$lib/components/dropdown.svelte";
-    import Select from "$lib/components/select.svelte";
-	import Text from "$lib/components/text.svelte";
     import Textarea from "$lib/components/textarea.svelte";
-    import { InfoIcon, PlusIcon, MinusIcon } from "svelte-feather-icons";
+    import { InfoIcon } from "svelte-feather-icons";
     import OrderAlert from "./order_alert.svelte";
-    import Numberpicker from "$lib/components/numberpicker.svelte";
+	import { SelectChip, SelectGroup } from "$lib/components/Select-Chip";
+    import Tabgroup from "$lib/components/Tab-Group/tabgroup.svelte";
+    import TextGroup from "$lib/components/Text-Group/text-group.svelte";
 
 
 	interface Props{
@@ -22,17 +19,19 @@
 
 
 	let toppings = ["Oreos","Ferroro rocher","Choc chips","Sprinkles"]
-	let flavour: string = $state("Vanilla");
-	let shape: string = $state("Round");
-	let size: string = $state("Medium");
+	let flavour: string = $state("");
+	let shape: string = $state("");
+	let size: string = $state("");
 	let message_type: string = $state("Topper");
 	let quantity:number = $state(1)
 	let message:string;
 
 	let active = $state(false)
 	let selectedToppings:string[] = []
+	let messageType = $state("Topper")
 
 	function addToCart(){
+		//TODO change this
 		if(!(flavour || shape || size || message_type)){
 			alert("Please fill in everything")
 			return
@@ -45,7 +44,7 @@
 			message_type,
 			message,
 			flavour,
-			price:200,
+			price:550,
 			quantity,
 			toppings,
 			image
@@ -58,66 +57,67 @@
 
 </script>
 
-<section class="md:max-w-[550px] sm:border md:border-0 border-l-0 md:border-l border-neutral-400 sm:rounded-5 md:rounded-none">
+<section>
 	<div class="flex flex-col gap-6 w-full">
-		<div class="flex flex-col gap-1">
-			<Text size='h4'>Custom cake</Text>
-			<Text weight='medium' size='h5'>K155.00</Text>	
+		<div class="flex flex-col gap-3">
+			<h2>Custom cake</h2>
+			<h4>K500.00</h4>
 		</div>
 		<div class="w-full flex flex-col gap-6">
-			<div class="flex flex-col">
-				<div class="flex items-center justify-between py-2">
-					<Text weight='medium' size='h6'>Flavour</Text>
-					<Select items={["Vanilla", "Chocolate","Red velvet"]} bind:activeItem={flavour}/>
-				</div>
-				<Divider/>
-				<div class="flex items-center justify-between py-2">
-					<Text weight='medium' size='h6'>Size</Text>
-					<Select items={["Large", "Medium","Small"]} bind:activeItem={size}/>
-				</div>
-				<Divider/>
-				<div class="flex items-center justify-between py-2">
-					<Text weight='medium' size='h6'>Shape</Text>
-					<Select items={["Round", "Square","Heart"]} bind:activeItem={shape}/>
-				</div>
-				<Divider/>
-				<div class="flex items-center justify-between py-2">
-					<Text weight='medium' size='h6'>Message Type</Text>
-					<Select items={["Topper", "Icing"]} bind:activeItem={message_type}/>
-				</div>
-				<Divider/>
-				<div class="flex items-center justify-between py-2">
-					<Text weight='medium' size='h6'>Quantity</Text>
-					<Numberpicker bind:number={quantity}/>
-				</div>
+			<div class="flex flex-col gap-4">
+				<h4>Flavour</h4>
+				<TextGroup bind:activeOption={flavour} options={["Vanilla","Chocolate","Red velvet", "Marble"]}/>
 			</div>
-			<Textarea label="Message" placeholder="Type message..."/>
+			<div class="flex flex-col gap-4">
+				<h4>Shape</h4>
+				<SelectGroup bind:activeOption={shape}>
+					<SelectChip value="Round">Round</SelectChip>
+					<SelectChip value="Square">Square</SelectChip>
+					<SelectChip value="Heart">Heart</SelectChip>
+				</SelectGroup>
+			</div>
+			<div class="flex flex-col gap-4">
+				<h4>Size</h4>
+				<SelectGroup bind:activeOption={size}>
+					<SelectChip value="Small" showSubtext>Small</SelectChip>
+					<SelectChip value="Medium" showSubtext subtext="+K100">Medium</SelectChip>
+					<SelectChip value="Big" showSubtext subtext="+K400">Big</SelectChip>
+					<SelectChip value="Large" showSubtext subtext="+K650">Large</SelectChip>
+				</SelectGroup>
+			</div>
+			<div class="flex flex-col gap-5">
+				<Tabgroup bind:activeOption={messageType} options={["Topper","Icing"]}/>
+				<Textarea label="Message" placeholder="Type message..."/>
+			</div>
 			<div class="flex flex-col gap-2 w-full">
-				<Text weight="medium">Toppings</Text>
-				{#each toppings as topping}
+				<h4>Toppings</h4>
+				<ul class="flex flex-col gap-5">
+					{#each toppings as topping}
 					<li class="flex items-center justify-between">
-						<Text class="text-neutral-600">{ topping }</Text>
+						<p class="text-neutral-600">{ topping }</p>
 						<Checkbox 
 							value={topping} 
-							onchecked={(value)=>{selectedToppings.push(value);console.log(selectedToppings)}}
-							onunchecked={(value)=>{
+							onchecked={(value:any)=>{selectedToppings.push(value);console.log(selectedToppings)}}
+							onunchecked={(value:any)=>{
 								let index = selectedToppings.indexOf(value)
 								selectedToppings.splice(index,1)
 							}}
 						/>
 					</li>
 				{/each}
-			</div>
-			<div class="flex gap-2">
-				<InfoIcon size='24'/>
-				<!--FIXME text colour-->
-				<Text weight='medium'>
-					Note that cakes must be ordered at least 24 hours before the expected pick up date
-				</Text>
+				</ul>
 			</div>
 		</div>
 	</div>
-	<button class="btn-medium btn-rounded btn-primary w-full" onclick={addToCart}>Add to cart</button>
+	<div class="flex flex-col gap-3">
+		<div class="flex gap-2">
+			<InfoIcon size='23'/>
+			<p class="small text-neutral-700">
+				Note that cakes must be ordered at least 24 hours before the expected pick up date
+			</p>
+		</div>
+		<button class="btn-medium btn-rounded btn-primary w-full" onclick={addToCart}>Add to cart</button>
+	</div>
 	{#if active}
 		<OrderAlert bind:active/>
 	{/if}
@@ -125,6 +125,7 @@
 
 <style lang="postcss">
 	section{
+		@apply md:max-w-[550px] sm:border md:border-0 border-l-0 md:border-l border-neutral-400 sm:rounded-5 md:rounded-none;
 		flex:1;
 		background-color: white;
 		display: flex;
