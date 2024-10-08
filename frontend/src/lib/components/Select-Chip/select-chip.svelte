@@ -47,7 +47,6 @@ class="select-chip {showSubtext ? 'with-subtext' : null} {value === $activeOptio
 	.select-chip:hover{
 		background: theme(colors.primary.lightest);
 		border: 1px solid theme(colors.primary.light);
-		scale:1.05;
 	}
 
 	.active-select{
