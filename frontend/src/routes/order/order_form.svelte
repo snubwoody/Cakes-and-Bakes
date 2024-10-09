@@ -4,7 +4,7 @@
     import Textarea from "$lib/components/textarea.svelte";
     import { InfoIcon } from "svelte-feather-icons";
     import OrderAlert from "./order_alert.svelte";
-	import { SelectChip, SelectGroup } from "$lib/components/select-chip";
+	import { SelectChip, SelectGroup } from "$lib/components/select_chip";
     import Tabgroup  from "$lib/components/tabgroup.svelte";
     import TextGroup from "$lib/components/text-group.svelte";
 
