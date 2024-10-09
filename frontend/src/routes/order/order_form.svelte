@@ -5,8 +5,8 @@
     import { InfoIcon } from "svelte-feather-icons";
     import OrderAlert from "./order_alert.svelte";
 	import { SelectChip, SelectGroup } from "$lib/components/select-chip";
-    import Tabgroup from "$lib/components/tab-group/tabgroup.svelte";
-    import TextGroup from "$lib/components/text-group/text-group.svelte";
+    import Tabgroup  from "$lib/components/tabgroup.svelte";
+    import TextGroup from "$lib/components/text-group.svelte";
 
 
 	interface Props{
