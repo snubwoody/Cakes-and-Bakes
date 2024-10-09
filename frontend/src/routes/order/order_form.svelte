@@ -4,9 +4,9 @@
     import Textarea from "$lib/components/textarea.svelte";
     import { InfoIcon } from "svelte-feather-icons";
     import OrderAlert from "./order_alert.svelte";
-	import { SelectChip, SelectGroup } from "$lib/components/Select-Chip";
-    import Tabgroup from "$lib/components/Tab-Group/tabgroup.svelte";
-    import TextGroup from "$lib/components/Text-Group/text-group.svelte";
+	import { SelectChip, SelectGroup } from "$lib/components/select-chip";
+    import Tabgroup from "$lib/components/tab-group/tabgroup.svelte";
+    import TextGroup from "$lib/components/text-group/text-group.svelte";
 
 
 	interface Props{
