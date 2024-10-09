@@ -6,10 +6,8 @@
 	
 	let form:HTMLFormElement;
 
-	//TODO handle null values or maybe just post the data as a form
 	const addPurchase = () => {
 		if (!form.checkValidity()){
-			//alert("Please fill in all the values")
 			return
 		}
 
@@ -79,7 +77,7 @@
 			</TextField>
 			<TextField>
 				<Label>Phone number</Label>
-				<input required name="phoneNumber" type="text" inputmode="tel" placeholder="09xxxxxxxx" class="input" >
+				<input required name="phoneNumber" type="tel" inputmode="tel" placeholder="09xxxxxxxx" class="input" >
 			</TextField>
 		</div>
 		<Divider/>
